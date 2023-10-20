@@ -43,7 +43,7 @@ pub type BaseConversionFunctionsMap =
     HashMap<&'static str, (BaseConversionFunction, BaseConversionFunction)>;
 pub type ValuesFunction = fn(&str, f64) -> anyhow::Result<Vec<(String, f64)>>;
 
-// TODO: Renam? Maybe this should be dimension?
+// TODO: Rename? Maybe this should be dimension?
 pub trait Values {
     fn name() -> &'static str;
     fn values(unit: &str, value: f64) -> Result<Vec<(String, f64)>> {
