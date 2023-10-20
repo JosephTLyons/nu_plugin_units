@@ -36,17 +36,18 @@ pub use temperature::Temperature;
 pub use time::Time;
 pub use volume::Volume;
 
+use anyhow::{anyhow, Result};
+
 pub type BaseConversionFunction = fn(f64) -> f64;
 pub type BaseConversionFunctionsMap =
     HashMap<&'static str, (BaseConversionFunction, BaseConversionFunction)>;
 
 pub trait Values {
-    fn values(unit: &str, value: f64) -> Option<Vec<(String, f64)>> {
+    fn values(unit: &str, value: f64) -> Result<Vec<(String, f64)>> {
         let base_conversion_functions = Self::base_conversion_functions();
 
         let Some(conversion_functions) = base_conversion_functions.get(unit) else {
-            // TODO: Return error instead
-            return None;
+            return Err(anyhow!("{} is not a valid unit", unit));
         };
 
         let (to_base, _) = conversion_functions;
@@ -66,9 +67,9 @@ pub trait Values {
             })
             .collect();
 
-        Some(values)
+        Ok(values)
     }
-    fn base_conversion_functions() -> BaseConversionFunctionsMap; // TODO: Return error?
+    fn base_conversion_functions() -> BaseConversionFunctionsMap;
 }
 
 // TODO: Rename

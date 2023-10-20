@@ -50,18 +50,39 @@ impl Plugin for Units {
     fn run(&mut self, _: &str, call: &EvaluatedCall, _: &Value) -> Result<Value, LabeledError> {
         let tag = call.head;
 
-        let dimension = call.get_flag::<String>("dimension");
-        let unit = call.get_flag::<String>("unit");
-        let value = call.get_flag::<f64>("value");
+        let dimension = call.get_flag_value("dimension");
+        let unit = call.get_flag_value("unit");
+        let value = call.get_flag_value("value");
 
-        let Ok(Some(dimension)) = dimension else {
-            // TODO: Return error instead
-            return Ok(Value::nothing(tag));
+        // In theory, all of these checks already happened, these are required flags.
+        // Is there a way to avoid having to check for errors again after?
+        // A way to obtain non-optional values?
+        let Some(dimension) = dimension else {
+            let error = "dimension is reqiuired".to_string();
+            return Err(LabeledError {
+                label: error.clone(),
+                msg: error,
+                span: None,
+            });
         };
 
-        let (Ok(Some(unit)), Ok(Some(value))) = (unit, value) else {
-            // TODO: Return error instead
-            return Ok(Value::nothing(tag));
+        let (Some(unit), Some(value)) = (unit, value) else {
+            let error = "unit and value are required is missing".to_string();
+            return Err(LabeledError {
+                label: error.clone(),
+                msg: error,
+                span: None,
+            });
+        };
+
+        let dimension_span = dimension.span();
+        let Ok(dimension) = dimension.as_string() else {
+            let error = "dimension must be a string".to_string();
+            return Err(LabeledError {
+                label: error.clone(),
+                msg: error,
+                span: None,
+            });
         };
 
         let values_function = match dimension.as_ref() {
@@ -82,12 +103,42 @@ impl Plugin for Units {
             "temperature" => Temperature::values,
             "time" => Time::values,
             "volume" => Volume::values,
-            _ => return Ok(Value::nothing(tag)), // Should be an error
+            _ => {
+                let error = format!("\"{}\" is not a valid dimension", dimension); // TODO Add list of valid dimensions after refactoring list
+                return Err(LabeledError {
+                    label: error.clone(),
+                    msg: error,
+                    span: Some(dimension_span),
+                });
+            }
         };
 
-        let Some(mut values) = values_function(&unit, value) else {
-            // TODO: Return error instead
-            return Ok(Value::nothing(tag));
+        let unit_span = unit.span();
+        let Ok(unit) = unit.as_string() else {
+            let error = "unit must be a string".to_string();
+            return Err(LabeledError {
+                label: error.clone(),
+                msg: error,
+                span: None,
+            });
+        };
+
+        let Ok(value) = value.as_f64() else {
+            let error = "value must be a string".to_string();
+            return Err(LabeledError {
+                label: error.clone(),
+                msg: error,
+                span: None,
+            });
+        };
+
+        let Ok(mut values) = values_function(&unit, value) else {
+            let error = format!("\"{}\" is not a valid unit", unit); // TODO Add list of valid units after refactoring list
+            return Err(LabeledError {
+                label: error.clone(),
+                msg: error,
+                span: Some(unit_span),
+            });
         };
 
         // TODO: Avoid clone
