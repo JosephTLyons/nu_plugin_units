@@ -5,6 +5,9 @@ use unit_conversions::volume::*;
 pub struct Volume;
 
 impl Values for Volume {
+    fn name() -> &'static str {
+        "volume"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

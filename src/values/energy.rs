@@ -5,6 +5,9 @@ use unit_conversions::energy::*;
 pub struct Energy;
 
 impl Values for Energy {
+    fn name() -> &'static str {
+        "energy"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

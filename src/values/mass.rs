@@ -5,6 +5,9 @@ use unit_conversions::mass::*;
 pub struct Mass;
 
 impl Values for Mass {
+    fn name() -> &'static str {
+        "mass"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

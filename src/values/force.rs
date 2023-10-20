@@ -5,6 +5,9 @@ use unit_conversions::force::*;
 pub struct Force;
 
 impl Values for Force {
+    fn name() -> &'static str {
+        "force"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

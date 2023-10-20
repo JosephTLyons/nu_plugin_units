@@ -5,6 +5,9 @@ use unit_conversions::luminous_energy::*;
 pub struct LuminousEnergy;
 
 impl Values for LuminousEnergy {
+    fn name() -> &'static str {
+        "luminous-energy"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

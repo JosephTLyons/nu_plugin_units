@@ -5,6 +5,9 @@ use unit_conversions::angle::*;
 pub struct Angle;
 
 impl Values for Angle {
+    fn name() -> &'static str {
+        "angle"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

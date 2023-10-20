@@ -5,6 +5,9 @@ use unit_conversions::area::*;
 pub struct Area;
 
 impl Values for Area {
+    fn name() -> &'static str {
+        "area"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

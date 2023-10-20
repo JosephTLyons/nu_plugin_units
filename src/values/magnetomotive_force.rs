@@ -5,6 +5,9 @@ use unit_conversions::magnetomotive_force::*;
 pub struct MagnetomotiveForce;
 
 impl Values for MagnetomotiveForce {
+    fn name() -> &'static str {
+        "magnetomotive-force"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

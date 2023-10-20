@@ -5,6 +5,9 @@ use unit_conversions::data_storage::*;
 pub struct DataStorage;
 
 impl Values for DataStorage {
+    fn name() -> &'static str {
+        "data-storage"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

@@ -41,8 +41,11 @@ use anyhow::{anyhow, Result};
 pub type BaseConversionFunction = fn(f64) -> f64;
 pub type BaseConversionFunctionsMap =
     HashMap<&'static str, (BaseConversionFunction, BaseConversionFunction)>;
+pub type ValuesFunction = fn(&str, f64) -> anyhow::Result<Vec<(String, f64)>>;
 
+// TODO: Renam? Maybe this should be dimension?
 pub trait Values {
+    fn name() -> &'static str;
     fn values(unit: &str, value: f64) -> Result<Vec<(String, f64)>> {
         let base_conversion_functions = Self::base_conversion_functions();
 

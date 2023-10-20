@@ -5,6 +5,9 @@ use unit_conversions::data_transfer_rate::*;
 pub struct DataTransferRate;
 
 impl Values for DataTransferRate {
+    fn name() -> &'static str {
+        "data-transfer-rate"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

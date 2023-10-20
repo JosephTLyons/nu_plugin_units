@@ -5,6 +5,9 @@ use unit_conversions::frequency::*;
 pub struct Frequency;
 
 impl Values for Frequency {
+    fn name() -> &'static str {
+        "frequency"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

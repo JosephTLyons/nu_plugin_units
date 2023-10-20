@@ -5,6 +5,9 @@ use unit_conversions::pressure::*;
 pub struct Pressure;
 
 impl Values for Pressure {
+    fn name() -> &'static str {
+        "pressure"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

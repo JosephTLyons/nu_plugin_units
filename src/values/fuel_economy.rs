@@ -5,6 +5,9 @@ use unit_conversions::fuel_economy::*;
 pub struct FuelEconomy;
 
 impl Values for FuelEconomy {
+    fn name() -> &'static str {
+        "fuel-economy"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

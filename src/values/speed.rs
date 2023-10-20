@@ -5,6 +5,9 @@ use unit_conversions::speed::*;
 pub struct Speed;
 
 impl Values for Speed {
+    fn name() -> &'static str {
+        "speed"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

@@ -5,6 +5,9 @@ use unit_conversions::temperature::*;
 pub struct Temperature;
 
 impl Values for Temperature {
+    fn name() -> &'static str {
+        "temperature"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

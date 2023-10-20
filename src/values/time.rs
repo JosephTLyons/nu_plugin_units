@@ -5,6 +5,9 @@ use unit_conversions::time::*;
 pub struct Time;
 
 impl Values for Time {
+    fn name() -> &'static str {
+        "time"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion(

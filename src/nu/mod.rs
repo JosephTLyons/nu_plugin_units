@@ -1,27 +1,8 @@
+use std::collections::HashMap;
+
 use crate::values::*;
 use nu_plugin::{EvaluatedCall, LabeledError, Plugin};
 use nu_protocol::{Category, PluginSignature, Record, SyntaxShape, Value};
-
-// TODO: Move
-enum Dimensions {
-    Angle,
-    Area,
-    DataStorage,
-    DataTransferRate,
-    Energy,
-    Force,
-    Frequency,
-    FuelEconomy,
-    Length,
-    LuminousEnergy,
-    MagnetomotiveForce,
-    Mass,
-    Pressure,
-    Speed,
-    Temperature,
-    Time,
-    Volume,
-}
 
 pub struct Units;
 
@@ -58,7 +39,7 @@ impl Plugin for Units {
         // Is there a way to avoid having to check for errors again after?
         // A way to obtain non-optional values?
         let (Some(dimension), Some(unit), Some(value)) = (dimension, unit, value) else {
-            let error = "dimension, unit, and value are required".to_string();
+            let error = "dimension, unit, and value are required.".to_string();
             return Err(LabeledError {
                 label: error.clone(),
                 msg: error,
@@ -68,7 +49,7 @@ impl Plugin for Units {
 
         let dimension_span = dimension.span();
         let Ok(dimension) = dimension.as_string() else {
-            let error = "dimension must be a string".to_string();
+            let error = "dimension must be a string.".to_string();
             return Err(LabeledError {
                 label: error.clone(),
                 msg: error,
@@ -76,37 +57,47 @@ impl Plugin for Units {
             });
         };
 
-        let values_function = match dimension.as_ref() {
-            "angle" => Angle::values,
-            "area" => Area::values,
-            "data-storage" => DataStorage::values,
-            "data-transfer-rate" => DataTransferRate::values,
-            "energy" => Energy::values,
-            "force" => Force::values,
-            "frequency" => Frequency::values,
-            "fuel-economy" => FuelEconomy::values,
-            "length" => Length::values,
-            "luminous-energy" => LuminousEnergy::values,
-            "magnetomotive-force" => MagnetomotiveForce::values,
-            "mass" => Mass::values,
-            "pressure" => Pressure::values,
-            "speed" => Speed::values,
-            "temperature" => Temperature::values,
-            "time" => Time::values,
-            "volume" => Volume::values,
-            _ => {
-                let error = format!("\"{}\" is not a valid dimension", dimension); // TODO Add list of valid dimensions after refactoring list
-                return Err(LabeledError {
-                    label: error.clone(),
-                    msg: error,
-                    span: Some(dimension_span),
-                });
-            }
+        // TODO: Better name?
+        let dimensions: HashMap<&str, ValuesFunction> = HashMap::from_iter([
+            (Angle::name(), Angle::values as ValuesFunction),
+            (Area::name(), Area::values),
+            (DataStorage::name(), DataStorage::values),
+            (DataTransferRate::name(), DataTransferRate::values),
+            (Energy::name(), Energy::values),
+            (Force::name(), Force::values),
+            (Frequency::name(), Frequency::values),
+            (FuelEconomy::name(), FuelEconomy::values),
+            (Length::name(), Length::values),
+            (LuminousEnergy::name(), LuminousEnergy::values),
+            (MagnetomotiveForce::name(), MagnetomotiveForce::values),
+            (Mass::name(), Mass::values),
+            (Pressure::name(), Pressure::values),
+            (Speed::name(), Speed::values),
+            (Temperature::name(), Temperature::values),
+            (Time::name(), Time::values),
+            (Volume::name(), Volume::values),
+        ]);
+
+        let Some(values_function) = dimensions.get(dimension.as_str()) else {
+            let mut valid_dimensions = dimensions
+                .keys()
+                .map(|dimension| format!("\"{}\"", dimension))
+                .collect::<Vec<_>>();
+            valid_dimensions.sort();
+            let valid_dimensions = valid_dimensions.join(", ");
+            let label = format!("\"{}\" is not a valid dimension.", dimension);
+            let msg = format!("{} Options: {}", label, valid_dimensions);
+
+            return Err(LabeledError {
+                label,
+                msg,
+                span: Some(dimension_span),
+            });
         };
 
         let unit_span = unit.span();
         let Ok(unit) = unit.as_string() else {
-            let error = "unit must be a string".to_string();
+            let error = "unit must be a string.".to_string();
             return Err(LabeledError {
                 label: error.clone(),
                 msg: error,
@@ -116,7 +107,7 @@ impl Plugin for Units {
 
         let value_span = value.span();
         let Ok(value) = value.as_f64() else {
-            let error = "value must be a string".to_string();
+            let error = "value must be a string.".to_string();
             return Err(LabeledError {
                 label: error.clone(),
                 msg: error,
@@ -125,7 +116,7 @@ impl Plugin for Units {
         };
 
         let Ok(mut values) = values_function(&unit, value) else {
-            let error = format!("\"{}\" is not a valid unit", unit); // TODO Add list of valid units after refactoring list
+            let error = format!("\"{}\" is not a valid unit.", unit); // TODO Add list of valid units after refactoring list
             return Err(LabeledError {
                 label: error.clone(),
                 msg: error,

@@ -5,6 +5,9 @@ use unit_conversions::length::*;
 pub struct Length;
 
 impl Values for Length {
+    fn name() -> &'static str {
+        "length"
+    }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion("centimetres", centimetres::to_feet, feet::to_centimetres),
