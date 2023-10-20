@@ -143,6 +143,7 @@ impl Plugin for Units {
     }
 }
 
-// Errors that are produced by picking a wrong dimension or unit should show the list of available. Find a reuse the hashmaps to surface those.
+// Errors that are produced by picking a unit should show the list of available. Find a reuse the hashmaps to surface those.
 
-// TODO: Reasses which units to use as base units
+// TODO: Reasses which units to use as base units - rounding issues currently
+// TODO: Try `units -d time -u minutes -v 3` and look at seconds
