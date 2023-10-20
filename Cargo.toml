@@ -1,0 +1,14 @@
+[package]
+authors = ["Joseph T Lyons <JosephTLyons@gmail.com>"]
+description = "A plugin to convert between units for Nushell"
+edition = "2021"
+license = "GPL-3.0-only"
+name = "nu_plugin_units"
+repository = "https://github.com/JosephTLyons/nu_plugin_units"
+version = "0.1.0"
+
+[dependencies]
+nu-ansi-term = "0.49.0"
+nu-plugin = "0.85.0"
+nu-protocol = "0.85.0"
+unit-conversions = "0.1.13"
