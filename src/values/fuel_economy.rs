@@ -1,4 +1,4 @@
-use super::{conversion, BaseConversionFunction, BaseConversionFunctionsMap, Values};
+use super::{conversion, BaseConversionFunctionsMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::fuel_economy::*;
 
@@ -10,15 +10,11 @@ impl Values for FuelEconomy {
     }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
-            conversion(
-                "kilometre_per_litre",
-                identity as BaseConversionFunction,
-                identity as BaseConversionFunction,
-            ),
+            conversion("kilometre_per_litre", identity, identity),
             conversion(
                 "litres-per-100-kilometres",
-                litres_per100_kilometres::to_kilometre_per_litre as BaseConversionFunction,
-                kilometre_per_litre::to_litres_per100_kilometres as BaseConversionFunction,
+                litres_per100_kilometres::to_kilometre_per_litre,
+                kilometre_per_litre::to_litres_per100_kilometres,
             ),
             conversion(
                 "miles-per-gallon",

@@ -1,4 +1,4 @@
-use super::{conversion, BaseConversionFunction, BaseConversionFunctionsMap, Values};
+use super::{conversion, BaseConversionFunctionsMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::mass::*;
 
@@ -10,16 +10,8 @@ impl Values for Mass {
     }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
-            conversion(
-                "carats",
-                identity as BaseConversionFunction,
-                identity as BaseConversionFunction,
-            ),
-            conversion(
-                "grams",
-                grams::to_carats as BaseConversionFunction,
-                carats::to_grams as BaseConversionFunction,
-            ),
+            conversion("carats", identity, identity),
+            conversion("grams", grams::to_carats, carats::to_grams),
             conversion("kilograms", kilograms::to_carats, carats::to_kilograms),
             conversion("milligrams", milligrams::to_carats, carats::to_milligrams),
             conversion("ounces", ounces::to_carats, carats::to_ounces),

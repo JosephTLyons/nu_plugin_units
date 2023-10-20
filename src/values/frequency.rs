@@ -1,4 +1,4 @@
-use super::{conversion, BaseConversionFunction, BaseConversionFunctionsMap, Values};
+use super::{conversion, BaseConversionFunctionsMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::frequency::*;
 
@@ -10,16 +10,8 @@ impl Values for Frequency {
     }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
-            conversion(
-                "gigahertz",
-                identity as BaseConversionFunction,
-                identity as BaseConversionFunction,
-            ),
-            conversion(
-                "hertz",
-                hertz::to_gigahertz as BaseConversionFunction,
-                gigahertz::to_hertz as BaseConversionFunction,
-            ),
+            conversion("gigahertz", identity, identity),
+            conversion("hertz", hertz::to_gigahertz, gigahertz::to_hertz),
             conversion(
                 "kilohertz",
                 kilohertz::to_gigahertz,

@@ -1,4 +1,4 @@
-use super::{conversion, BaseConversionFunction, BaseConversionFunctionsMap, Values};
+use super::{conversion, BaseConversionFunctionsMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::time::*;
 
@@ -10,16 +10,8 @@ impl Values for Time {
     }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
-            conversion(
-                "centuries",
-                identity as BaseConversionFunction,
-                identity as BaseConversionFunction,
-            ),
-            conversion(
-                "days",
-                days::to_centuries as BaseConversionFunction,
-                centuries::to_days as BaseConversionFunction,
-            ),
+            conversion("centuries", identity, identity),
+            conversion("days", days::to_centuries, centuries::to_days),
             conversion("decades", decades::to_centuries, centuries::to_decades),
             conversion("hours", hours::to_centuries, centuries::to_hours),
             conversion(

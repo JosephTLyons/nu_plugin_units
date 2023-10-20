@@ -1,4 +1,4 @@
-use super::{conversion, BaseConversionFunction, BaseConversionFunctionsMap, Values};
+use super::{conversion, BaseConversionFunctionsMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::luminous_energy::*;
 
@@ -10,15 +10,11 @@ impl Values for LuminousEnergy {
     }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
-            conversion(
-                "lumen-hour",
-                identity as BaseConversionFunction,
-                identity as BaseConversionFunction,
-            ),
+            conversion("lumen-hour", identity, identity),
             conversion(
                 "lumen-minute",
-                lumen_minute::to_lumen_hour as BaseConversionFunction,
-                lumen_hour::to_lumen_minute as BaseConversionFunction,
+                lumen_minute::to_lumen_hour,
+                lumen_hour::to_lumen_minute,
             ),
             conversion(
                 "lumen-second",

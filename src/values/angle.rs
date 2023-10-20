@@ -1,4 +1,4 @@
-use super::{conversion, BaseConversionFunction, BaseConversionFunctionsMap, Values};
+use super::{conversion, BaseConversionFunctionsMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::angle::*;
 
@@ -10,11 +10,7 @@ impl Values for Angle {
     }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
-            conversion(
-                "degrees",
-                identity as BaseConversionFunction,
-                identity as BaseConversionFunction,
-            ),
+            conversion("degrees", identity, identity),
             conversion("gradians", gradians::to_degrees, degrees::to_gradians),
             conversion(
                 "milliradians",

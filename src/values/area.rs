@@ -1,4 +1,4 @@
-use super::{conversion, BaseConversionFunction, BaseConversionFunctionsMap, Values};
+use super::{conversion, BaseConversionFunctionsMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::area::*;
 
@@ -10,11 +10,7 @@ impl Values for Area {
     }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
-            conversion(
-                "acres",
-                acres::to_square_feet as BaseConversionFunction,
-                square_feet::to_acres as BaseConversionFunction,
-            ),
+            conversion("acres", acres::to_square_feet, square_feet::to_acres),
             conversion(
                 "hectares",
                 hectares::to_square_feet,

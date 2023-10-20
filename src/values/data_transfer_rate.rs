@@ -1,4 +1,4 @@
-use super::{conversion, BaseConversionFunction, BaseConversionFunctionsMap, Values};
+use super::{conversion, BaseConversionFunctionsMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::data_transfer_rate::*;
 
@@ -10,15 +10,11 @@ impl Values for DataTransferRate {
     }
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
-            conversion(
-                "bits-per-second",
-                identity as BaseConversionFunction,
-                identity as BaseConversionFunction,
-            ),
+            conversion("bits-per-second", identity, identity),
             conversion(
                 "gigabits-per-second",
-                giga_bits_per_second::to_bits_per_second as BaseConversionFunction,
-                bits_per_second::to_giga_bits_per_second as BaseConversionFunction,
+                giga_bits_per_second::to_bits_per_second,
+                bits_per_second::to_giga_bits_per_second,
             ),
             conversion(
                 "gigabytes-per-second",
