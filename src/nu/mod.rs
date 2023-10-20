@@ -62,7 +62,7 @@ impl Plugin for Units {
             return Err(LabeledError {
                 label: error.clone(),
                 msg: error,
-                span: None,
+                span: None, // TODO
             });
         };
 
@@ -71,7 +71,7 @@ impl Plugin for Units {
             return Err(LabeledError {
                 label: error.clone(),
                 msg: error,
-                span: None,
+                span: None, // TODO
             });
         };
 
@@ -81,7 +81,7 @@ impl Plugin for Units {
             return Err(LabeledError {
                 label: error.clone(),
                 msg: error,
-                span: None,
+                span: Some(dimension_span),
             });
         };
 
@@ -119,16 +119,17 @@ impl Plugin for Units {
             return Err(LabeledError {
                 label: error.clone(),
                 msg: error,
-                span: None,
+                span: Some(unit_span),
             });
         };
 
+        let value_span = value.span();
         let Ok(value) = value.as_f64() else {
             let error = "value must be a string".to_string();
             return Err(LabeledError {
                 label: error.clone(),
                 msg: error,
-                span: None,
+                span: Some(value_span),
             });
         };
 
