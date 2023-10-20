@@ -57,21 +57,12 @@ impl Plugin for Units {
         // In theory, all of these checks already happened, these are required flags.
         // Is there a way to avoid having to check for errors again after?
         // A way to obtain non-optional values?
-        let Some(dimension) = dimension else {
-            let error = "dimension is reqiuired".to_string();
+        let (Some(dimension), Some(unit), Some(value)) = (dimension, unit, value) else {
+            let error = "dimension, unit, and value are required".to_string();
             return Err(LabeledError {
                 label: error.clone(),
                 msg: error,
-                span: None, // TODO
-            });
-        };
-
-        let (Some(unit), Some(value)) = (unit, value) else {
-            let error = "unit and value are required is missing".to_string();
-            return Err(LabeledError {
-                label: error.clone(),
-                msg: error,
-                span: None, // TODO
+                span: None,
             });
         };
 
