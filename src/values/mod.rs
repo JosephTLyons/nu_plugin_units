@@ -36,21 +36,29 @@ pub use temperature::Temperature;
 pub use time::Time;
 pub use volume::Volume;
 
-use anyhow::{anyhow, Result};
+use anyhow::bail;
 
 pub type BaseConversionFunction = fn(f64) -> f64;
 pub type BaseConversionFunctionsMap =
     HashMap<&'static str, (BaseConversionFunction, BaseConversionFunction)>;
-pub type ValuesFunction = fn(&str, f64) -> anyhow::Result<Vec<(String, f64)>>;
+pub type ValuesFunctionReturn = anyhow::Result<Vec<(String, f64)>>;
+pub type ValuesFunction = fn(&str, f64) -> ValuesFunctionReturn;
 
 // TODO: Rename? Maybe this should be dimension?
 pub trait Values {
     fn name() -> &'static str;
-    fn values(unit: &str, value: f64) -> Result<Vec<(String, f64)>> {
+    fn units() -> Vec<&'static str> {
+        let mut units = Self::base_conversion_functions()
+            .into_keys()
+            .collect::<Vec<_>>();
+        units.sort();
+        units
+    }
+    fn values(unit: &str, value: f64) -> ValuesFunctionReturn {
         let base_conversion_functions = Self::base_conversion_functions();
 
         let Some(conversion_functions) = base_conversion_functions.get(unit) else {
-            return Err(anyhow!("{} is not a valid unit", unit));
+            bail!("{} is not a valid unit", unit);
         };
 
         let (to_base, _) = conversion_functions;
@@ -76,7 +84,7 @@ pub trait Values {
 }
 
 // TODO: Rename
-pub fn conversion(
+pub const fn conversion(
     name: &'static str,
     a: BaseConversionFunction,
     b: BaseConversionFunction,

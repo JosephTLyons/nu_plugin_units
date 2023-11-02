@@ -7,7 +7,6 @@ use nu_protocol::{Category, PluginSignature, Record, SyntaxShape, Value};
 pub struct Units;
 
 // TODO: Is the term dimension the correct thing to use here?
-// TODO: Is it possible to force a list of options for dimensions and units?
 impl Plugin for Units {
     fn signature(&self) -> Vec<PluginSignature> {
         vec![PluginSignature::build("units")
@@ -57,35 +56,34 @@ impl Plugin for Units {
             });
         };
 
-        // TODO: Better name?
-        let dimensions: HashMap<&str, ValuesFunction> = HashMap::from_iter([
-            (Angle::name(), Angle::values as ValuesFunction),
-            (Area::name(), Area::values),
-            (DataStorage::name(), DataStorage::values),
-            (DataTransferRate::name(), DataTransferRate::values),
-            (Energy::name(), Energy::values),
-            (Force::name(), Force::values),
-            (Frequency::name(), Frequency::values),
-            (FuelEconomy::name(), FuelEconomy::values),
-            (Length::name(), Length::values),
-            (LuminousEnergy::name(), LuminousEnergy::values),
-            (MagnetomotiveForce::name(), MagnetomotiveForce::values),
-            (Mass::name(), Mass::values),
-            (Pressure::name(), Pressure::values),
-            (Speed::name(), Speed::values),
-            (Temperature::name(), Temperature::values),
-            (Time::name(), Time::values),
-            (Volume::name(), Volume::values),
+        let dimensions: HashMap<&str, (ValuesFunction, Vec<&'static str>)> = HashMap::from_iter([
+            hash_map_tuple(Angle),
+            hash_map_tuple(Area),
+            hash_map_tuple(DataStorage),
+            hash_map_tuple(DataTransferRate),
+            hash_map_tuple(Energy),
+            hash_map_tuple(Force),
+            hash_map_tuple(Frequency),
+            hash_map_tuple(FuelEconomy),
+            hash_map_tuple(Length),
+            hash_map_tuple(LuminousEnergy),
+            hash_map_tuple(MagnetomotiveForce),
+            hash_map_tuple(Mass),
+            hash_map_tuple(Pressure),
+            hash_map_tuple(Speed),
+            hash_map_tuple(Temperature),
+            hash_map_tuple(Time),
+            hash_map_tuple(Volume),
         ]);
 
-        let Some(values_function) = dimensions.get(dimension.as_str()) else {
+        let Some((values_function, valid_units)) = dimensions.get(dimension.as_str()) else {
             let mut valid_dimensions = dimensions
                 .keys()
-                .map(|dimension| format!("\"{}\"", dimension))
+                .map(|dimension| format!("{}", dimension))
                 .collect::<Vec<_>>();
             valid_dimensions.sort();
             let valid_dimensions = valid_dimensions.join(", ");
-            let label = format!("\"{}\" is not a valid dimension.", dimension);
+            let label = format!("not a valid dimension.");
             let msg = format!("{} Options: {}", label, valid_dimensions);
 
             return Err(LabeledError {
@@ -116,15 +114,18 @@ impl Plugin for Units {
         };
 
         let Ok(mut values) = values_function(&unit, value) else {
-            let error = format!("\"{}\" is not a valid unit.", unit); // TODO Add list of valid units after refactoring list
+            let valid_units = valid_units.join(", ");
+            let label = format!("not a valid unit.");
+            let msg = format!("{} Options: {}", label, valid_units);
+
             return Err(LabeledError {
-                label: error.clone(),
-                msg: error,
-                span: Some(unit_span),
+                label,
+                msg,
+                span: Some(dimension_span),
             });
         };
 
-        // TODO: Avoid clone
+        // TODO: Avoid clone?
         values.sort_by_key(|value| value.0.clone());
 
         let values: Vec<_> = values
@@ -143,7 +144,10 @@ impl Plugin for Units {
     }
 }
 
-// Errors that are produced by picking a unit should show the list of available. Find a reuse the hashmaps to surface those.
-
 // TODO: Reasses which units to use as base units - rounding issues currently
 // TODO: Try `units -d time -u minutes -v 3` and look at seconds
+
+// TODO: Extract tuple into type?
+fn hash_map_tuple<D: Values>(_: D) -> (&'static str, (ValuesFunction, Vec<&'static str>)) {
+    (D::name(), (D::values, D::units()))
+}

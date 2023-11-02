@@ -8,6 +8,7 @@ impl Values for Angle {
     fn name() -> &'static str {
         "angle"
     }
+    // TODO: Cache these functions
     fn base_conversion_functions() -> BaseConversionFunctionsMap {
         HashMap::from_iter([
             conversion("degrees", identity, identity),
