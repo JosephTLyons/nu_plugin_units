@@ -121,7 +121,7 @@ impl Plugin for Units {
             return Err(LabeledError {
                 label,
                 msg,
-                span: Some(dimension_span),
+                span: Some(unit_span),
             });
         };
 
