@@ -145,7 +145,6 @@ impl Plugin for Units {
 }
 
 // TODO: Reasses which units to use as base units - rounding issues currently
-// TODO: Try `units -d time -u minutes -v 3` and look at seconds
 
 // TODO: Extract tuple into type?
 fn hash_map_tuple<D: Values>(_: D) -> (&'static str, (ValuesFunction, Vec<&'static str>)) {
