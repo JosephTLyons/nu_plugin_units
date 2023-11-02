@@ -30,31 +30,10 @@ impl Plugin for Units {
     fn run(&mut self, _: &str, call: &EvaluatedCall, _: &Value) -> Result<Value, LabeledError> {
         let tag = call.head;
 
-        let dimension = call.get_flag_value("dimension");
-        let unit = call.get_flag_value("unit");
-        let value = call.get_flag_value("value");
-
-        // In theory, all of these checks already happened, these are required flags.
-        // Is there a way to avoid having to check for errors again after?
-        // A way to obtain non-optional values?
-        let (Some(dimension), Some(unit), Some(value)) = (dimension, unit, value) else {
-            let error = "dimension, unit, and value are required.".to_string();
-            return Err(LabeledError {
-                label: error.clone(),
-                msg: error,
-                span: None,
-            });
-        };
-
+        // `Unwrap()`s are safe, since the flags, arguments, and arguments types are enforced by the signature
+        let dimension = call.get_flag_value("dimension").unwrap();
         let dimension_span = dimension.span();
-        let Ok(dimension) = dimension.as_string() else {
-            let error = "dimension must be a string.".to_string();
-            return Err(LabeledError {
-                label: error.clone(),
-                msg: error,
-                span: Some(dimension_span),
-            });
-        };
+        let dimension = dimension.as_string().unwrap();
 
         let dimensions: HashMap<&str, (ValuesFunction, Vec<&'static str>)> = HashMap::from_iter([
             hash_map_tuple(Angle),
@@ -93,25 +72,11 @@ impl Plugin for Units {
             });
         };
 
+        let unit = call.get_flag_value("unit").unwrap();
         let unit_span = unit.span();
-        let Ok(unit) = unit.as_string() else {
-            let error = "unit must be a string.".to_string();
-            return Err(LabeledError {
-                label: error.clone(),
-                msg: error,
-                span: Some(unit_span),
-            });
-        };
+        let unit = unit.as_string().unwrap();
 
-        let value_span = value.span();
-        let Ok(value) = value.as_f64() else {
-            let error = "value must be a string.".to_string();
-            return Err(LabeledError {
-                label: error.clone(),
-                msg: error,
-                span: Some(value_span),
-            });
-        };
+        let value = call.get_flag_value("value").unwrap().as_f64().unwrap();
 
         let Ok(mut values) = values_function(&unit, value) else {
             let valid_units = valid_units.join(", ");
