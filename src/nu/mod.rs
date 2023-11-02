@@ -6,32 +6,42 @@ use nu_protocol::{Category, PluginSignature, Record, SyntaxShape, Value};
 
 pub struct Units;
 
+const DIMENSION_FLAG_NAME: &'static str = "dimension";
+const UNIT_FLAG_NAME: &'static str = "unit";
+const VALUE_FLAG_NAME: &'static str = "value";
+
 // TODO: Is the term dimension the correct thing to use here?
 impl Plugin for Units {
     fn signature(&self) -> Vec<PluginSignature> {
         vec![PluginSignature::build("units")
             .usage("Convert between units")
             .required_named(
-                "dimension",
+                DIMENSION_FLAG_NAME,
                 SyntaxShape::String,
                 "specify the dimension",
                 Some('d'),
             )
             .required_named(
-                "unit",
+                UNIT_FLAG_NAME,
                 SyntaxShape::String,
                 "specify the unit type",
                 Some('u'),
             )
-            .required_named("value", SyntaxShape::Float, "specify the value", Some('v'))
+            .required_named(
+                VALUE_FLAG_NAME,
+                SyntaxShape::Float,
+                "specify the value",
+                Some('v'),
+            )
             .category(Category::Generators)]
     }
 
     fn run(&mut self, _: &str, call: &EvaluatedCall, _: &Value) -> Result<Value, LabeledError> {
         let tag = call.head;
 
-        // `Unwrap()`s are safe, since the flags, arguments, and arguments types are enforced by the signature
-        let dimension = call.get_flag_value("dimension").unwrap();
+        // The `unwrap()`s are safe, since the flags, arguments, and arguments types are enforced by the signature
+        // The `unwrap()`s here are to make sure the strings looked up matches the ones in the signature
+        let dimension = call.get_flag_value(DIMENSION_FLAG_NAME).unwrap();
         let dimension_span = dimension.span();
         let dimension = dimension.as_string().unwrap();
 
@@ -65,6 +75,8 @@ impl Plugin for Units {
             let label = format!("not a valid dimension.");
             let msg = format!("{} Options: {}", label, valid_dimensions);
 
+            // TODO: Convert all of these errors to errors that have "help" messages
+            // TODO: Use nushell error structure as a guide to rework these errors
             return Err(LabeledError {
                 label,
                 msg,
@@ -72,11 +84,15 @@ impl Plugin for Units {
             });
         };
 
-        let unit = call.get_flag_value("unit").unwrap();
+        let unit = call.get_flag_value(UNIT_FLAG_NAME).unwrap();
         let unit_span = unit.span();
         let unit = unit.as_string().unwrap();
 
-        let value = call.get_flag_value("value").unwrap().as_f64().unwrap();
+        let value = call
+            .get_flag_value(VALUE_FLAG_NAME)
+            .unwrap()
+            .as_f64()
+            .unwrap();
 
         let Ok(mut values) = values_function(&unit, value) else {
             let valid_units = valid_units.join(", ");
@@ -98,8 +114,8 @@ impl Plugin for Units {
             .map(|(unit, value)| {
                 let unit = unit.replace('-', " ");
                 let record = Record::from_iter([
-                    ("unit".into(), Value::string(unit, tag)),
-                    ("value".into(), Value::float(*value, tag)),
+                    (UNIT_FLAG_NAME.into(), Value::string(unit, tag)),
+                    (VALUE_FLAG_NAME.into(), Value::float(*value, tag)),
                 ]);
                 Value::record(record, tag)
             })
