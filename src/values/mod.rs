@@ -48,9 +48,7 @@ pub type ValuesFunction = fn(&str, f64) -> ValuesFunctionReturn;
 pub trait Values {
     fn name() -> &'static str;
     fn units() -> Vec<&'static str> {
-        let mut units = Self::base_conversion_functions()
-            .into_keys()
-            .collect::<Vec<_>>();
+        let mut units: Vec<_> = Self::base_conversion_functions().into_keys().collect();
         units.sort();
         units
     }
