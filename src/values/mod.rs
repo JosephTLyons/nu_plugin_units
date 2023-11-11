@@ -65,9 +65,10 @@ pub trait Values {
         let values: Vec<(String, f64)> = base_conversion_functions
             .iter()
             .map(|(unit, conversion_functions)| {
-                // A few asserts to make sure data is stored in a consistent way
-                assert!(!unit.contains('_'), "Unit should not contain underscores");
-                assert!(!unit.contains(' '), "Unit should not contain spaces");
+                // Make sure data is stored in a consistent way
+                if unit.contains(['_', ' ']) {
+                    eprintln!("Unit \"{}\" should not contain `_` or ` `. Use `-`", unit);
+                }
 
                 let (_, from_base) = conversion_functions;
                 let value = from_base(base_value);
