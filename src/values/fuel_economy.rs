@@ -2,7 +2,7 @@ use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::fuel_economy::*;
 
-const KILOMETRE_PER_LITRE: &str = "kilometre_per_litre";
+const KILOMETRE_PER_LITRE: &str = "kilometre-per-litre";
 const LITRES_PER_100_KILOMETRES: &str = "litres-per-100-kilometres";
 const MILES_PER_GALLON: &str = "miles-per-gallon";
 const US_MILES_PER_GALLON: &str = "us-miles-per-gallon";
