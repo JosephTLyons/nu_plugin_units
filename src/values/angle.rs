@@ -10,7 +10,7 @@ impl Values for Angle {
     fn name() -> &'static str {
         "angle"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "degrees",

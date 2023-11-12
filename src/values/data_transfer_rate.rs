@@ -8,7 +8,7 @@ impl Values for DataTransferRate {
     fn name() -> &'static str {
         "data-transfer-rate"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "bits-per-second",

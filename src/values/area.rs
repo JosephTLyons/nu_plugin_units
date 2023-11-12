@@ -8,7 +8,7 @@ impl Values for Area {
     fn name() -> &'static str {
         "area"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "acres",

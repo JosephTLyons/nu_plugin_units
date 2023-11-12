@@ -48,13 +48,13 @@ pub type ValuesFunction = fn(&str, f64) -> ValuesFunctionReturn;
 pub trait Values {
     fn name() -> &'static str;
     fn units() -> Vec<&'static str> {
-        let mut units: Vec<_> = Self::hash_map().into_keys().collect();
+        let mut units: Vec<_> = Self::conversion_function_map().into_keys().collect();
         units.sort();
         units
     }
     fn values(unit: &str, value: f64) -> ValuesFunctionReturn {
-        let hash_map = Self::hash_map();
-        let Some(conversion_functions) = hash_map.get(unit) else {
+        let conversion_function_map = Self::conversion_function_map();
+        let Some(conversion_functions) = conversion_function_map.get(unit) else {
             bail!("{} is not a valid unit", unit)
         };
 
@@ -73,5 +73,5 @@ pub trait Values {
 
         Ok(values)
     }
-    fn hash_map() -> ConversionFunctionMap;
+    fn conversion_function_map() -> ConversionFunctionMap;
 }

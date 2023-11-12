@@ -8,7 +8,7 @@ impl Values for Length {
     fn name() -> &'static str {
         "length"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "centimetres",

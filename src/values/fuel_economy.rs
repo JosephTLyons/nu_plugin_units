@@ -8,7 +8,7 @@ impl Values for FuelEconomy {
     fn name() -> &'static str {
         "fuel-economy"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "kilometre_per_litre",

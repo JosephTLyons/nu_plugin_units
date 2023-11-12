@@ -8,7 +8,7 @@ impl Values for Temperature {
     fn name() -> &'static str {
         "temperature"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "celsius",

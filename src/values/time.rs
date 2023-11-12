@@ -8,7 +8,7 @@ impl Values for Time {
     fn name() -> &'static str {
         "time"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "centuries",

@@ -8,7 +8,7 @@ impl Values for Energy {
     fn name() -> &'static str {
         "energy"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "btu",

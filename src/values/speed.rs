@@ -8,7 +8,7 @@ impl Values for Speed {
     fn name() -> &'static str {
         "speed"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "feet-per-second",

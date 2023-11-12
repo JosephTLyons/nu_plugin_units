@@ -8,7 +8,7 @@ impl Values for Force {
     fn name() -> &'static str {
         "force"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "dynes",

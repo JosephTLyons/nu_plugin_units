@@ -8,7 +8,7 @@ impl Values for LuminousEnergy {
     fn name() -> &'static str {
         "luminous-energy"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "lumen-hour",

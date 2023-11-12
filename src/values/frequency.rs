@@ -8,7 +8,7 @@ impl Values for Frequency {
     fn name() -> &'static str {
         "frequency"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "gigahertz",

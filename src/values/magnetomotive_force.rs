@@ -8,7 +8,7 @@ impl Values for MagnetomotiveForce {
     fn name() -> &'static str {
         "magnetomotive-force"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "ampereturns",

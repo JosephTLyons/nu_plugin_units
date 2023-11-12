@@ -8,7 +8,7 @@ impl Values for Volume {
     fn name() -> &'static str {
         "volume"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "cubic-feet",

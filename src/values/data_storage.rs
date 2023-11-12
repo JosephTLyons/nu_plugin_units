@@ -8,7 +8,7 @@ impl Values for DataStorage {
     fn name() -> &'static str {
         "data-storage"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "bits",

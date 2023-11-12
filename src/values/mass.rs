@@ -8,7 +8,7 @@ impl Values for Mass {
     fn name() -> &'static str {
         "mass"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "carats",

@@ -8,7 +8,7 @@ impl Values for Pressure {
     fn name() -> &'static str {
         "pressure"
     }
-    fn hash_map() -> ConversionFunctionMap {
+    fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
                 "atmospheres",
