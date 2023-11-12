@@ -38,9 +38,9 @@ pub use volume::Volume;
 
 use anyhow::bail;
 
-pub type BaseConversionFunction = fn(f64) -> f64;
-pub type BaseConversionFunctionsMap =
-    HashMap<&'static str, (BaseConversionFunction, BaseConversionFunction)>;
+// Rename or get rid of these all together - they might only be making things more confusing
+pub type ConversionFunction = fn(f64) -> f64;
+pub type ConversionFunctionMap = HashMap<&'static str, HashMap<&'static str, ConversionFunction>>;
 pub type ValuesFunctionReturn = anyhow::Result<Vec<(String, f64)>>;
 pub type ValuesFunction = fn(&str, f64) -> ValuesFunctionReturn;
 
@@ -48,48 +48,30 @@ pub type ValuesFunction = fn(&str, f64) -> ValuesFunctionReturn;
 pub trait Values {
     fn name() -> &'static str;
     fn units() -> Vec<&'static str> {
-        let mut units: Vec<_> = Self::base_conversion_functions().into_keys().collect();
+        let mut units: Vec<_> = Self::hash_map().into_keys().collect();
         units.sort();
         units
     }
     fn values(unit: &str, value: f64) -> ValuesFunctionReturn {
-        let base_conversion_functions = Self::base_conversion_functions();
-
-        let Some(conversion_functions) = base_conversion_functions.get(unit) else {
-            bail!("{} is not a valid unit", unit);
+        let hash_map = Self::hash_map();
+        let Some(conversion_functions) = hash_map.get(unit) else {
+            bail!("{} is not a valid unit", unit)
         };
 
-        let (to_base, _) = conversion_functions;
-        let base_value = to_base(value);
-
-        let values: Vec<(String, f64)> = base_conversion_functions
+        let values: Vec<(String, f64)> = conversion_functions
             .iter()
-            .map(|(unit, conversion_functions)| {
+            .map(|(unit, conversion_function)| {
                 // Make sure data is stored in a consistent way
+                // TODO: Pull illegal_characters out into a variable
                 if unit.contains(['_', ' ']) {
                     eprintln!("Unit \"{}\" should not contain `_` or ` `. Use `-`", unit);
                 }
 
-                let (_, from_base) = conversion_functions;
-                let value = from_base(base_value);
-
-                (unit.to_string(), value)
+                (unit.to_string(), conversion_function(value))
             })
             .collect();
 
         Ok(values)
     }
-    fn base_conversion_functions() -> BaseConversionFunctionsMap;
-}
-
-// TODO: Rename
-pub const fn conversion(
-    name: &'static str,
-    a: BaseConversionFunction,
-    b: BaseConversionFunction,
-) -> (
-    &'static str,
-    (BaseConversionFunction, BaseConversionFunction),
-) {
-    (name, (a, b))
+    fn hash_map() -> ConversionFunctionMap;
 }

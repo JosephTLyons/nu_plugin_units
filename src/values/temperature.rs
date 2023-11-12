@@ -1,4 +1,4 @@
-use super::{conversion, BaseConversionFunctionsMap, Values};
+use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::temperature::*;
 
@@ -8,12 +8,44 @@ impl Values for Temperature {
     fn name() -> &'static str {
         "temperature"
     }
-    fn base_conversion_functions() -> BaseConversionFunctionsMap {
+    fn hash_map() -> ConversionFunctionMap {
         HashMap::from_iter([
-            conversion("celsius", identity, identity),
-            conversion("fahrenheit", fahrenheit::to_celsius, celsius::to_fahrenheit),
-            conversion("kelvin", kelvin::to_celsius, celsius::to_kelvin),
-            conversion("rankine", rankine::to_celsius, celsius::to_rankine),
+            (
+                "celsius",
+                HashMap::from_iter([
+                    ("celsius", identity as ConversionFunction),
+                    ("fahrenheit", celsius::to_fahrenheit),
+                    ("kelvin", celsius::to_kelvin),
+                    ("rankine", celsius::to_rankine),
+                ]),
+            ),
+            (
+                "fahrenheit",
+                HashMap::from_iter([
+                    ("celsius", fahrenheit::to_celsius as ConversionFunction),
+                    ("fahrenheit", identity),
+                    ("kelvin", fahrenheit::to_kelvin),
+                    ("rankine", fahrenheit::to_rankine),
+                ]),
+            ),
+            (
+                "kelvin",
+                HashMap::from_iter([
+                    ("celsius", kelvin::to_celsius as ConversionFunction),
+                    ("fahrenheit", kelvin::to_fahrenheit),
+                    ("kelvin", identity),
+                    ("rankine", kelvin::to_rankine),
+                ]),
+            ),
+            (
+                "rankine",
+                HashMap::from_iter([
+                    ("celsius", rankine::to_celsius as ConversionFunction),
+                    ("fahrenheit", rankine::to_fahrenheit),
+                    ("kelvin", rankine::to_kelvin),
+                    ("rankine", identity),
+                ]),
+            ),
         ])
     }
 }

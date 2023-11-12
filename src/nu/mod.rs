@@ -45,7 +45,11 @@ impl Plugin for Units {
         let dimension_span = dimension.span();
         let dimension = dimension.as_string().unwrap();
 
-        let dimensions: HashMap<&str, (ValuesFunction, Vec<&'static str>)> = HashMap::from_iter([
+        let unit = call.get_flag_value(UNIT_FLAG_NAME).unwrap();
+        let unit_span = unit.span();
+        let unit = unit.as_string().unwrap();
+
+        let dimensions: HashMap<_, _> = HashMap::from_iter([
             hash_map_tuple(Angle),
             hash_map_tuple(Area),
             hash_map_tuple(DataStorage),
@@ -65,7 +69,7 @@ impl Plugin for Units {
             hash_map_tuple(Volume),
         ]);
 
-        let Some((values_function, valid_units)) = dimensions.get(dimension.as_str()) else {
+        let Some((values_function, units)) = dimensions.get(dimension.as_str()) else {
             let mut valid_dimensions = dimensions
                 .keys()
                 .map(|dimension| format!("{}", dimension))
@@ -84,10 +88,6 @@ impl Plugin for Units {
             });
         };
 
-        let unit = call.get_flag_value(UNIT_FLAG_NAME).unwrap();
-        let unit_span = unit.span();
-        let unit = unit.as_string().unwrap();
-
         let value = call
             .get_flag_value(VALUE_FLAG_NAME)
             .unwrap()
@@ -95,7 +95,7 @@ impl Plugin for Units {
             .unwrap();
 
         let Ok(mut values) = values_function(&unit, value) else {
-            let valid_units = valid_units.join(", ");
+            let valid_units = units.join(", ");
             let label = format!("not a valid unit.");
             let msg = format!("{} Options: {}", label, valid_units);
 

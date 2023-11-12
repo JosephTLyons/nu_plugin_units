@@ -1,4 +1,4 @@
-use super::{conversion, BaseConversionFunctionsMap, Values};
+use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::magnetomotive_force::*;
 
@@ -8,13 +8,24 @@ impl Values for MagnetomotiveForce {
     fn name() -> &'static str {
         "magnetomotive-force"
     }
-    fn base_conversion_functions() -> BaseConversionFunctionsMap {
+    fn hash_map() -> ConversionFunctionMap {
         HashMap::from_iter([
-            conversion("ampereturns", identity, identity),
-            conversion(
+            (
+                "ampereturns",
+                HashMap::from_iter([
+                    ("ampereturns", identity as ConversionFunction),
+                    ("gilberts", ampereturns::to_gilberts),
+                ]),
+            ),
+            (
                 "gilberts",
-                gilberts::to_ampereturns,
-                ampereturns::to_gilberts,
+                HashMap::from_iter([
+                    (
+                        "ampereturns",
+                        gilberts::to_ampereturns as ConversionFunction,
+                    ),
+                    ("gilberts", identity),
+                ]),
             ),
         ])
     }
