@@ -2,6 +2,11 @@ use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::frequency::*;
 
+const GIGAHERTZ: &str = "gigahertz";
+const HERTZ: &str = "hertz";
+const KILOHERTZ: &str = "kilohertz";
+const MEGAHERTZ: &str = "megahertz";
+
 pub struct Frequency;
 
 impl Values for Frequency {
@@ -11,39 +16,39 @@ impl Values for Frequency {
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
-                "gigahertz",
+                GIGAHERTZ,
                 HashMap::from_iter([
-                    ("gigahertz", identity as ConversionFunction),
-                    ("hertz", gigahertz::to_hertz),
-                    ("kilohertz", gigahertz::to_kilohertz),
-                    ("megahertz", gigahertz::to_megahertz),
+                    (GIGAHERTZ, identity as ConversionFunction),
+                    (HERTZ, gigahertz::to_hertz),
+                    (KILOHERTZ, gigahertz::to_kilohertz),
+                    (MEGAHERTZ, gigahertz::to_megahertz),
                 ]),
             ),
             (
-                "hertz",
+                HERTZ,
                 HashMap::from_iter([
-                    ("gigahertz", hertz::to_gigahertz as ConversionFunction),
-                    ("hertz", identity),
-                    ("kilohertz", hertz::to_kilohertz),
-                    ("megahertz", hertz::to_megahertz),
+                    (GIGAHERTZ, hertz::to_gigahertz as ConversionFunction),
+                    (HERTZ, identity),
+                    (KILOHERTZ, hertz::to_kilohertz),
+                    (MEGAHERTZ, hertz::to_megahertz),
                 ]),
             ),
             (
-                "kilohertz",
+                KILOHERTZ,
                 HashMap::from_iter([
-                    ("gigahertz", kilohertz::to_gigahertz as ConversionFunction),
-                    ("hertz", kilohertz::to_hertz),
-                    ("kilohertz", identity),
-                    ("megahertz", kilohertz::to_megahertz),
+                    (GIGAHERTZ, kilohertz::to_gigahertz as ConversionFunction),
+                    (HERTZ, kilohertz::to_hertz),
+                    (KILOHERTZ, identity),
+                    (MEGAHERTZ, kilohertz::to_megahertz),
                 ]),
             ),
             (
-                "megahertz",
+                MEGAHERTZ,
                 HashMap::from_iter([
-                    ("gigahertz", megahertz::to_gigahertz as ConversionFunction),
-                    ("hertz", megahertz::to_hertz),
-                    ("kilohertz", megahertz::to_kilohertz),
-                    ("megahertz", identity),
+                    (GIGAHERTZ, megahertz::to_gigahertz as ConversionFunction),
+                    (HERTZ, megahertz::to_hertz),
+                    (KILOHERTZ, megahertz::to_kilohertz),
+                    (MEGAHERTZ, identity),
                 ]),
             ),
         ])

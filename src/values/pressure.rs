@@ -2,6 +2,12 @@ use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::pressure::*;
 
+const ATMOSPHERES: &str = "atmospheres";
+const BARS: &str = "bars";
+const PASCALS: &str = "pascals";
+const PSI: &str = "psi";
+const TORRS: &str = "torrs";
+
 pub struct Pressure;
 
 impl Values for Pressure {
@@ -11,53 +17,53 @@ impl Values for Pressure {
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
-                "atmospheres",
+                ATMOSPHERES,
                 HashMap::from_iter([
-                    ("atmospheres", identity as ConversionFunction),
-                    ("bars", atmospheres::to_bars),
-                    ("pascals", atmospheres::to_pascals),
-                    ("psi", atmospheres::to_psi),
-                    ("torrs", atmospheres::to_torrs),
+                    (ATMOSPHERES, identity as ConversionFunction),
+                    (BARS, atmospheres::to_bars),
+                    (PASCALS, atmospheres::to_pascals),
+                    (PSI, atmospheres::to_psi),
+                    (TORRS, atmospheres::to_torrs),
                 ]),
             ),
             (
-                "bars",
+                BARS,
                 HashMap::from_iter([
-                    ("atmospheres", bars::to_atmospheres as ConversionFunction),
-                    ("bars", identity),
-                    ("pascals", bars::to_pascals),
-                    ("psi", bars::to_psi),
-                    ("torrs", bars::to_torrs),
+                    (ATMOSPHERES, bars::to_atmospheres as ConversionFunction),
+                    (BARS, identity),
+                    (PASCALS, bars::to_pascals),
+                    (PSI, bars::to_psi),
+                    (TORRS, bars::to_torrs),
                 ]),
             ),
             (
-                "pascals",
+                PASCALS,
                 HashMap::from_iter([
-                    ("atmospheres", pascals::to_atmospheres as ConversionFunction),
-                    ("bars", pascals::to_bars),
-                    ("pascals", identity),
-                    ("psi", pascals::to_psi),
-                    ("torrs", pascals::to_torrs),
+                    (ATMOSPHERES, pascals::to_atmospheres as ConversionFunction),
+                    (BARS, pascals::to_bars),
+                    (PASCALS, identity),
+                    (PSI, pascals::to_psi),
+                    (TORRS, pascals::to_torrs),
                 ]),
             ),
             (
-                "psi",
+                PSI,
                 HashMap::from_iter([
-                    ("atmospheres", psi::to_atmospheres as ConversionFunction),
-                    ("bars", psi::to_bars),
-                    ("pascals", psi::to_pascals),
-                    ("psi", identity),
-                    ("torrs", psi::to_torrs),
+                    (ATMOSPHERES, psi::to_atmospheres as ConversionFunction),
+                    (BARS, psi::to_bars),
+                    (PASCALS, psi::to_pascals),
+                    (PSI, identity),
+                    (TORRS, psi::to_torrs),
                 ]),
             ),
             (
-                "torrs",
+                TORRS,
                 HashMap::from_iter([
-                    ("atmospheres", torrs::to_atmospheres as ConversionFunction),
-                    ("bars", torrs::to_bars),
-                    ("pascals", torrs::to_pascals),
-                    ("psi", torrs::to_psi),
-                    ("torrs", identity),
+                    (ATMOSPHERES, torrs::to_atmospheres as ConversionFunction),
+                    (BARS, torrs::to_bars),
+                    (PASCALS, torrs::to_pascals),
+                    (PSI, torrs::to_psi),
+                    (TORRS, identity),
                 ]),
             ),
         ])

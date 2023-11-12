@@ -2,6 +2,11 @@ use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::force::*;
 
+const DYNES: &str = "dynes";
+const KILOGRAMFORCE: &str = "kilogramforce";
+const NEWTONS: &str = "newtons";
+const POUNDALS: &str = "poundals";
+
 pub struct Force;
 
 impl Values for Force {
@@ -11,39 +16,39 @@ impl Values for Force {
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
-                "dynes",
+                DYNES,
                 HashMap::from_iter([
-                    ("dynes", identity as ConversionFunction),
-                    ("kilogramforce", dynes::to_kilogramforce),
-                    ("newtons", dynes::to_newtons),
-                    ("poundals", dynes::to_poundals),
+                    (DYNES, identity as ConversionFunction),
+                    (KILOGRAMFORCE, dynes::to_kilogramforce),
+                    (NEWTONS, dynes::to_newtons),
+                    (POUNDALS, dynes::to_poundals),
                 ]),
             ),
             (
-                "kilogramforce",
+                KILOGRAMFORCE,
                 HashMap::from_iter([
-                    ("dynes", kilogramforce::to_dynes as ConversionFunction),
-                    ("kilogramforce", identity),
-                    ("newtons", kilogramforce::to_newtons),
-                    ("poundals", kilogramforce::to_poundals),
+                    (DYNES, kilogramforce::to_dynes as ConversionFunction),
+                    (KILOGRAMFORCE, identity),
+                    (NEWTONS, kilogramforce::to_newtons),
+                    (POUNDALS, kilogramforce::to_poundals),
                 ]),
             ),
             (
-                "newtons",
+                NEWTONS,
                 HashMap::from_iter([
-                    ("dynes", newtons::to_dynes as ConversionFunction),
-                    ("kilogramforce", newtons::to_kilogramforce),
-                    ("newtons", identity),
-                    ("poundals", newtons::to_poundals),
+                    (DYNES, newtons::to_dynes as ConversionFunction),
+                    (KILOGRAMFORCE, newtons::to_kilogramforce),
+                    (NEWTONS, identity),
+                    (POUNDALS, newtons::to_poundals),
                 ]),
             ),
             (
-                "poundals",
+                POUNDALS,
                 HashMap::from_iter([
-                    ("dynes", poundals::to_dynes as ConversionFunction),
-                    ("kilogramforce", poundals::to_kilogramforce),
-                    ("newtons", poundals::to_newtons),
-                    ("poundals", identity),
+                    (DYNES, poundals::to_dynes as ConversionFunction),
+                    (KILOGRAMFORCE, poundals::to_kilogramforce),
+                    (NEWTONS, poundals::to_newtons),
+                    (POUNDALS, identity),
                 ]),
             ),
         ])

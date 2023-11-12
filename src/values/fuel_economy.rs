@@ -2,6 +2,11 @@ use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::fuel_economy::*;
 
+const KILOMETRE_PER_LITRE: &str = "kilometre_per_litre";
+const LITRES_PER_100_KILOMETRES: &str = "litres-per-100-kilometres";
+const MILES_PER_GALLON: &str = "miles-per-gallon";
+const US_MILES_PER_GALLON: &str = "us-miles-per-gallon";
+
 pub struct FuelEconomy;
 
 impl Values for FuelEconomy {
@@ -11,72 +16,69 @@ impl Values for FuelEconomy {
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
-                "kilometre_per_litre",
+                KILOMETRE_PER_LITRE,
                 HashMap::from_iter([
-                    ("kilometre_per_litre", identity as ConversionFunction),
+                    (KILOMETRE_PER_LITRE, identity as ConversionFunction),
                     (
-                        "litres-per-100-kilometres",
+                        LITRES_PER_100_KILOMETRES,
                         kilometre_per_litre::to_litres_per100_kilometres,
                     ),
-                    ("miles-per-gallon", kilometre_per_litre::to_miles_per_gallon),
+                    (MILES_PER_GALLON, kilometre_per_litre::to_miles_per_gallon),
                     (
-                        "u-s-miles-per-gallon",
+                        US_MILES_PER_GALLON,
                         kilometre_per_litre::to_u_s_miles_per_gallon,
                     ),
                 ]),
             ),
             (
-                "litres-per-100-kilometres",
+                LITRES_PER_100_KILOMETRES,
                 HashMap::from_iter([
                     (
-                        "kilometre_per_litre",
+                        KILOMETRE_PER_LITRE,
                         litres_per100_kilometres::to_kilometre_per_litre as ConversionFunction,
                     ),
-                    ("litres-per-100-kilometres", identity),
+                    (LITRES_PER_100_KILOMETRES, identity),
                     (
-                        "miles-per-gallon",
+                        MILES_PER_GALLON,
                         litres_per100_kilometres::to_miles_per_gallon,
                     ),
                     (
-                        "u-s-miles-per-gallon",
+                        US_MILES_PER_GALLON,
                         litres_per100_kilometres::to_u_s_miles_per_gallon,
                     ),
                 ]),
             ),
             (
-                "miles-per-gallon",
+                MILES_PER_GALLON,
                 HashMap::from_iter([
                     (
-                        "kilometre_per_litre",
+                        KILOMETRE_PER_LITRE,
                         miles_per_gallon::to_kilometre_per_litre as ConversionFunction,
                     ),
                     (
-                        "litres-per-100-kilometres",
+                        LITRES_PER_100_KILOMETRES,
                         miles_per_gallon::to_litres_per100_kilometres,
                     ),
-                    ("miles-per-gallon", identity),
+                    (MILES_PER_GALLON, identity),
                     (
-                        "u-s-miles-per-gallon",
+                        US_MILES_PER_GALLON,
                         miles_per_gallon::to_u_s_miles_per_gallon,
                     ),
                 ]),
             ),
             (
-                "u-s-miles-per-gallon",
+                US_MILES_PER_GALLON,
                 HashMap::from_iter([
                     (
-                        "kilometre_per_litre",
+                        KILOMETRE_PER_LITRE,
                         u_s_miles_per_gallon::to_kilometre_per_litre as ConversionFunction,
                     ),
                     (
-                        "litres-per-100-kilometres",
+                        LITRES_PER_100_KILOMETRES,
                         u_s_miles_per_gallon::to_litres_per100_kilometres,
                     ),
-                    (
-                        "miles-per-gallon",
-                        u_s_miles_per_gallon::to_miles_per_gallon,
-                    ),
-                    ("u-s-miles-per-gallon", identity),
+                    (MILES_PER_GALLON, u_s_miles_per_gallon::to_miles_per_gallon),
+                    (US_MILES_PER_GALLON, identity),
                 ]),
             ),
         ])

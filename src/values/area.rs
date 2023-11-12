@@ -2,6 +2,14 @@ use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::area::*;
 
+const ACRES: &str = "acres";
+const HECTARES: &str = "hectares";
+const SQUARE_FEET: &str = "square-feet";
+const SQUARE_INCHES: &str = "square-inches";
+const SQUARE_KILOMETRES: &str = "square-kilometres";
+const SQUARE_METRES: &str = "square-metres";
+const SQUARE_MILES: &str = "square-miles";
+
 pub struct Area;
 
 impl Values for Area {
@@ -11,87 +19,87 @@ impl Values for Area {
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
-                "acres",
+                ACRES,
                 HashMap::from_iter([
-                    ("acres", identity as ConversionFunction),
-                    ("hectares", acres::to_hectares),
-                    ("square-feet", acres::to_square_feet),
-                    ("square-inches", acres::to_square_inches),
-                    ("square-kilometres", acres::to_square_kilometres),
-                    ("square-metres", acres::to_square_metres),
-                    ("square-miles", acres::to_square_miles),
+                    (ACRES, identity as ConversionFunction),
+                    (HECTARES, acres::to_hectares),
+                    (SQUARE_FEET, acres::to_square_feet),
+                    (SQUARE_INCHES, acres::to_square_inches),
+                    (SQUARE_KILOMETRES, acres::to_square_kilometres),
+                    (SQUARE_METRES, acres::to_square_metres),
+                    (SQUARE_MILES, acres::to_square_miles),
                 ]),
             ),
             (
-                "hectares",
+                HECTARES,
                 HashMap::from_iter([
-                    ("acres", hectares::to_acres as ConversionFunction),
-                    ("hectares", identity),
-                    ("square-feet", hectares::to_square_feet),
-                    ("square-inches", hectares::to_square_inches),
-                    ("square-kilometres", hectares::to_square_kilometres),
-                    ("square-metres", hectares::to_square_metres),
-                    ("square-miles", hectares::to_square_miles),
+                    (ACRES, hectares::to_acres as ConversionFunction),
+                    (HECTARES, identity),
+                    (SQUARE_FEET, hectares::to_square_feet),
+                    (SQUARE_INCHES, hectares::to_square_inches),
+                    (SQUARE_KILOMETRES, hectares::to_square_kilometres),
+                    (SQUARE_METRES, hectares::to_square_metres),
+                    (SQUARE_MILES, hectares::to_square_miles),
                 ]),
             ),
             (
-                "square-feet",
+                SQUARE_FEET,
                 HashMap::from_iter([
-                    ("acres", square_feet::to_acres as ConversionFunction),
-                    ("hectares", square_feet::to_hectares),
-                    ("square-feet", identity),
-                    ("square-inches", square_feet::to_square_inches),
-                    ("square-kilometres", square_feet::to_square_kilometres),
-                    ("square-metres", square_feet::to_square_metres),
-                    ("square-miles", square_feet::to_square_miles),
+                    (ACRES, square_feet::to_acres as ConversionFunction),
+                    (HECTARES, square_feet::to_hectares),
+                    (SQUARE_FEET, identity),
+                    (SQUARE_INCHES, square_feet::to_square_inches),
+                    (SQUARE_KILOMETRES, square_feet::to_square_kilometres),
+                    (SQUARE_METRES, square_feet::to_square_metres),
+                    (SQUARE_MILES, square_feet::to_square_miles),
                 ]),
             ),
             (
-                "square-inches",
+                SQUARE_INCHES,
                 HashMap::from_iter([
-                    ("acres", square_inches::to_acres as ConversionFunction),
-                    ("hectares", square_inches::to_hectares),
-                    ("square-feet", square_inches::to_square_feet),
-                    ("square-inches", identity),
-                    ("square-kilometres", square_inches::to_square_kilometres),
-                    ("square-metres", square_inches::to_square_metres),
-                    ("square-miles", square_inches::to_square_miles),
+                    (ACRES, square_inches::to_acres as ConversionFunction),
+                    (HECTARES, square_inches::to_hectares),
+                    (SQUARE_FEET, square_inches::to_square_feet),
+                    (SQUARE_INCHES, identity),
+                    (SQUARE_KILOMETRES, square_inches::to_square_kilometres),
+                    (SQUARE_METRES, square_inches::to_square_metres),
+                    (SQUARE_MILES, square_inches::to_square_miles),
                 ]),
             ),
             (
-                "square-kilometres",
+                SQUARE_KILOMETRES,
                 HashMap::from_iter([
-                    ("acres", square_kilometres::to_acres as ConversionFunction),
-                    ("hectares", square_kilometres::to_hectares),
-                    ("square-feet", square_kilometres::to_square_feet),
-                    ("square-inches", square_kilometres::to_square_inches),
-                    ("square-kilometres", identity),
-                    ("square-metres", square_kilometres::to_square_metres),
-                    ("square-miles", square_kilometres::to_square_miles),
+                    (ACRES, square_kilometres::to_acres as ConversionFunction),
+                    (HECTARES, square_kilometres::to_hectares),
+                    (SQUARE_FEET, square_kilometres::to_square_feet),
+                    (SQUARE_INCHES, square_kilometres::to_square_inches),
+                    (SQUARE_KILOMETRES, identity),
+                    (SQUARE_METRES, square_kilometres::to_square_metres),
+                    (SQUARE_MILES, square_kilometres::to_square_miles),
                 ]),
             ),
             (
-                "square-metres",
+                SQUARE_METRES,
                 HashMap::from_iter([
-                    ("acres", square_metres::to_acres as ConversionFunction),
-                    ("hectares", square_metres::to_hectares),
-                    ("square-feet", square_metres::to_square_feet),
-                    ("square-inches", square_metres::to_square_inches),
-                    ("square-kilometres", square_metres::to_square_kilometres),
-                    ("square-metres", identity),
-                    ("square-miles", square_metres::to_square_miles),
+                    (ACRES, square_metres::to_acres as ConversionFunction),
+                    (HECTARES, square_metres::to_hectares),
+                    (SQUARE_FEET, square_metres::to_square_feet),
+                    (SQUARE_INCHES, square_metres::to_square_inches),
+                    (SQUARE_KILOMETRES, square_metres::to_square_kilometres),
+                    (SQUARE_METRES, identity),
+                    (SQUARE_MILES, square_metres::to_square_miles),
                 ]),
             ),
             (
-                "square-miles",
+                SQUARE_MILES,
                 HashMap::from_iter([
-                    ("acres", square_miles::to_acres as ConversionFunction),
-                    ("hectares", square_miles::to_hectares),
-                    ("square-feet", square_miles::to_square_feet),
-                    ("square-inches", square_miles::to_square_inches),
-                    ("square-kilometres", square_miles::to_square_kilometres),
-                    ("square-metres", square_miles::to_square_metres),
-                    ("square-miles", identity),
+                    (ACRES, square_miles::to_acres as ConversionFunction),
+                    (HECTARES, square_miles::to_hectares),
+                    (SQUARE_FEET, square_miles::to_square_feet),
+                    (SQUARE_INCHES, square_miles::to_square_inches),
+                    (SQUARE_KILOMETRES, square_miles::to_square_kilometres),
+                    (SQUARE_METRES, square_miles::to_square_metres),
+                    (SQUARE_MILES, identity),
                 ]),
             ),
         ])

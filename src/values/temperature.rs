@@ -2,6 +2,11 @@ use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::temperature::*;
 
+const CELSIUS: &str = "celsius";
+const FAHRENHEIT: &str = "fahrenheit";
+const KELVIN: &str = "kelvin";
+const RANKINE: &str = "rankine";
+
 pub struct Temperature;
 
 impl Values for Temperature {
@@ -11,39 +16,39 @@ impl Values for Temperature {
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
-                "celsius",
+                CELSIUS,
                 HashMap::from_iter([
-                    ("celsius", identity as ConversionFunction),
-                    ("fahrenheit", celsius::to_fahrenheit),
-                    ("kelvin", celsius::to_kelvin),
-                    ("rankine", celsius::to_rankine),
+                    (CELSIUS, identity as ConversionFunction),
+                    (FAHRENHEIT, celsius::to_fahrenheit),
+                    (KELVIN, celsius::to_kelvin),
+                    (RANKINE, celsius::to_rankine),
                 ]),
             ),
             (
-                "fahrenheit",
+                FAHRENHEIT,
                 HashMap::from_iter([
-                    ("celsius", fahrenheit::to_celsius as ConversionFunction),
-                    ("fahrenheit", identity),
-                    ("kelvin", fahrenheit::to_kelvin),
-                    ("rankine", fahrenheit::to_rankine),
+                    (CELSIUS, fahrenheit::to_celsius as ConversionFunction),
+                    (FAHRENHEIT, identity),
+                    (KELVIN, fahrenheit::to_kelvin),
+                    (RANKINE, fahrenheit::to_rankine),
                 ]),
             ),
             (
-                "kelvin",
+                KELVIN,
                 HashMap::from_iter([
-                    ("celsius", kelvin::to_celsius as ConversionFunction),
-                    ("fahrenheit", kelvin::to_fahrenheit),
-                    ("kelvin", identity),
-                    ("rankine", kelvin::to_rankine),
+                    (CELSIUS, kelvin::to_celsius as ConversionFunction),
+                    (FAHRENHEIT, kelvin::to_fahrenheit),
+                    (KELVIN, identity),
+                    (RANKINE, kelvin::to_rankine),
                 ]),
             ),
             (
-                "rankine",
+                RANKINE,
                 HashMap::from_iter([
-                    ("celsius", rankine::to_celsius as ConversionFunction),
-                    ("fahrenheit", rankine::to_fahrenheit),
-                    ("kelvin", rankine::to_kelvin),
-                    ("rankine", identity),
+                    (CELSIUS, rankine::to_celsius as ConversionFunction),
+                    (FAHRENHEIT, rankine::to_fahrenheit),
+                    (KELVIN, rankine::to_kelvin),
+                    (RANKINE, identity),
                 ]),
             ),
         ])

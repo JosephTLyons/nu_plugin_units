@@ -2,6 +2,18 @@ use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::data_transfer_rate::*;
 
+const BITS_PER_SECOND: &str = "bits-per-second";
+const GIGABITS_PER_SECOND: &str = "gigabits-per-second";
+const GIGABYTES_PER_SECOND: &str = "gigabytes-per-second";
+const KIBIBITS_PER_SECOND: &str = "kibibits-per-second";
+const KILOBITS_PER_SECOND: &str = "kilobits-per-second";
+const KILOBYTES_PER_SECOND: &str = "kilobytes-per-second";
+const MEBIBITS_PER_SECOND: &str = "mebibits-per-second";
+const MEGABITS_PER_SECOND: &str = "megabits-per-second";
+const MEGABYTES_PER_SECOND: &str = "megabytes-per-second";
+const TERABITS_PER_SECOND: &str = "terabits-per-second";
+const TERABYTES_PER_SECOND: &str = "terabytes-per-second";
+
 pub struct DataTransferRate;
 
 impl Values for DataTransferRate {
@@ -11,506 +23,500 @@ impl Values for DataTransferRate {
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
-                "bits-per-second",
+                BITS_PER_SECOND,
                 HashMap::from_iter([
-                    ("bits-per-second", identity as ConversionFunction),
+                    (BITS_PER_SECOND, identity as ConversionFunction),
                     (
-                        "gigabits-per-second",
+                        GIGABITS_PER_SECOND,
                         bits_per_second::to_giga_bits_per_second,
                     ),
                     (
-                        "gigabytes-per-second",
+                        GIGABYTES_PER_SECOND,
                         bits_per_second::to_giga_bytes_per_second,
                     ),
+                    (KIBIBITS_PER_SECOND, bits_per_second::to_kibibits_per_second),
                     (
-                        "kibibits-per-second",
-                        bits_per_second::to_kibibits_per_second,
-                    ),
-                    (
-                        "kilobits-per-second",
+                        KILOBITS_PER_SECOND,
                         bits_per_second::to_kilo_bits_per_second,
                     ),
                     (
-                        "kilobytes-per-second",
+                        KILOBYTES_PER_SECOND,
                         bits_per_second::to_kilo_bytes_per_second,
                     ),
+                    (MEBIBITS_PER_SECOND, bits_per_second::to_mebibits_per_second),
                     (
-                        "mebibits-per-second",
-                        bits_per_second::to_mebibits_per_second,
-                    ),
-                    (
-                        "megabits-per-second",
+                        MEGABITS_PER_SECOND,
                         bits_per_second::to_mega_bits_per_second,
                     ),
                     (
-                        "megabytes-per-second",
+                        MEGABYTES_PER_SECOND,
                         bits_per_second::to_mega_bytes_per_second,
                     ),
                     (
-                        "terabits-per-second",
+                        TERABITS_PER_SECOND,
                         bits_per_second::to_tera_bits_per_second,
                     ),
                     (
-                        "terabytes-per-second",
+                        TERABYTES_PER_SECOND,
                         bits_per_second::to_tera_bytes_per_second,
                     ),
                 ]),
             ),
             (
-                "gigabits-per-second",
+                GIGABITS_PER_SECOND,
                 HashMap::from_iter([
                     (
-                        "bits-per-second",
+                        BITS_PER_SECOND,
                         giga_bits_per_second::to_bits_per_second as ConversionFunction,
                     ),
-                    ("gigabits-per-second", identity),
+                    (GIGABITS_PER_SECOND, identity),
                     (
-                        "gigabytes-per-second",
+                        GIGABYTES_PER_SECOND,
                         giga_bits_per_second::to_giga_bytes_per_second,
                     ),
                     (
-                        "kibibits-per-second",
+                        KIBIBITS_PER_SECOND,
                         giga_bits_per_second::to_kibibits_per_second,
                     ),
                     (
-                        "kilobits-per-second",
+                        KILOBITS_PER_SECOND,
                         giga_bits_per_second::to_kilo_bits_per_second,
                     ),
                     (
-                        "kilobytes-per-second",
+                        KILOBYTES_PER_SECOND,
                         giga_bits_per_second::to_kilo_bytes_per_second,
                     ),
                     (
-                        "mebibits-per-second",
+                        MEBIBITS_PER_SECOND,
                         giga_bits_per_second::to_mebibits_per_second,
                     ),
                     (
-                        "megabits-per-second",
+                        MEGABITS_PER_SECOND,
                         giga_bits_per_second::to_mega_bits_per_second,
                     ),
                     (
-                        "megabytes-per-second",
+                        MEGABYTES_PER_SECOND,
                         giga_bits_per_second::to_mega_bytes_per_second,
                     ),
                     (
-                        "terabits-per-second",
+                        TERABITS_PER_SECOND,
                         giga_bits_per_second::to_tera_bits_per_second,
                     ),
                     (
-                        "terabytes-per-second",
+                        TERABYTES_PER_SECOND,
                         giga_bits_per_second::to_tera_bytes_per_second,
                     ),
                 ]),
             ),
             (
-                "gigabytes-per-second",
+                GIGABYTES_PER_SECOND,
                 HashMap::from_iter([
                     (
-                        "bits-per-second",
+                        BITS_PER_SECOND,
                         giga_bytes_per_second::to_bits_per_second as ConversionFunction,
                     ),
                     (
-                        "gigabits-per-second",
+                        GIGABITS_PER_SECOND,
                         giga_bytes_per_second::to_giga_bits_per_second,
                     ),
-                    ("gigabytes-per-second", identity),
+                    (GIGABYTES_PER_SECOND, identity),
                     (
-                        "kibibits-per-second",
+                        KIBIBITS_PER_SECOND,
                         giga_bytes_per_second::to_kibibits_per_second,
                     ),
                     (
-                        "kilobits-per-second",
+                        KILOBITS_PER_SECOND,
                         giga_bytes_per_second::to_kilo_bits_per_second,
                     ),
                     (
-                        "kilobytes-per-second",
+                        KILOBYTES_PER_SECOND,
                         giga_bytes_per_second::to_kilo_bytes_per_second,
                     ),
                     (
-                        "mebibits-per-second",
+                        MEBIBITS_PER_SECOND,
                         giga_bytes_per_second::to_mebibits_per_second,
                     ),
                     (
-                        "megabits-per-second",
+                        MEGABITS_PER_SECOND,
                         giga_bytes_per_second::to_mega_bits_per_second,
                     ),
                     (
-                        "megabytes-per-second",
+                        MEGABYTES_PER_SECOND,
                         giga_bytes_per_second::to_mega_bytes_per_second,
                     ),
                     (
-                        "terabits-per-second",
+                        TERABITS_PER_SECOND,
                         giga_bytes_per_second::to_tera_bits_per_second,
                     ),
                     (
-                        "terabytes-per-second",
+                        TERABYTES_PER_SECOND,
                         giga_bytes_per_second::to_tera_bytes_per_second,
                     ),
                 ]),
             ),
             (
-                "kibibits-per-second",
+                KIBIBITS_PER_SECOND,
                 HashMap::from_iter([
                     (
-                        "bits-per-second",
+                        BITS_PER_SECOND,
                         kibibits_per_second::to_bits_per_second as ConversionFunction,
                     ),
                     (
-                        "gigabits-per-second",
+                        GIGABITS_PER_SECOND,
                         kibibits_per_second::to_giga_bits_per_second,
                     ),
                     (
-                        "gigabytes-per-second",
+                        GIGABYTES_PER_SECOND,
                         kibibits_per_second::to_giga_bytes_per_second,
                     ),
-                    ("kibibits-per-second", identity),
+                    (KIBIBITS_PER_SECOND, identity),
                     (
-                        "kilobits-per-second",
+                        KILOBITS_PER_SECOND,
                         kibibits_per_second::to_kilo_bits_per_second,
                     ),
                     (
-                        "kilobytes-per-second",
+                        KILOBYTES_PER_SECOND,
                         kibibits_per_second::to_kilo_bytes_per_second,
                     ),
                     (
-                        "mebibits-per-second",
+                        MEBIBITS_PER_SECOND,
                         kibibits_per_second::to_mebibits_per_second,
                     ),
                     (
-                        "megabits-per-second",
+                        MEGABITS_PER_SECOND,
                         kibibits_per_second::to_mega_bits_per_second,
                     ),
                     (
-                        "megabytes-per-second",
+                        MEGABYTES_PER_SECOND,
                         kibibits_per_second::to_mega_bytes_per_second,
                     ),
                     (
-                        "terabits-per-second",
+                        TERABITS_PER_SECOND,
                         kibibits_per_second::to_tera_bits_per_second,
                     ),
                     (
-                        "terabytes-per-second",
+                        TERABYTES_PER_SECOND,
                         kibibits_per_second::to_tera_bytes_per_second,
                     ),
                 ]),
             ),
             (
-                "kilobits-per-second",
+                KILOBITS_PER_SECOND,
                 HashMap::from_iter([
                     (
-                        "bits-per-second",
+                        BITS_PER_SECOND,
                         kilo_bits_per_second::to_bits_per_second as ConversionFunction,
                     ),
                     (
-                        "gigabits-per-second",
+                        GIGABITS_PER_SECOND,
                         kilo_bits_per_second::to_giga_bits_per_second,
                     ),
                     (
-                        "gigabytes-per-second",
+                        GIGABYTES_PER_SECOND,
                         kilo_bits_per_second::to_giga_bytes_per_second,
                     ),
                     (
-                        "kibibits-per-second",
+                        KIBIBITS_PER_SECOND,
                         kilo_bits_per_second::to_kibibits_per_second,
                     ),
-                    ("kilobits-per-second", identity),
+                    (KILOBITS_PER_SECOND, identity),
                     (
-                        "kilobytes-per-second",
+                        KILOBYTES_PER_SECOND,
                         kilo_bits_per_second::to_kilo_bytes_per_second,
                     ),
                     (
-                        "mebibits-per-second",
+                        MEBIBITS_PER_SECOND,
                         kilo_bits_per_second::to_mebibits_per_second,
                     ),
                     (
-                        "megabits-per-second",
+                        MEGABITS_PER_SECOND,
                         kilo_bits_per_second::to_mega_bits_per_second,
                     ),
                     (
-                        "megabytes-per-second",
+                        MEGABYTES_PER_SECOND,
                         kilo_bits_per_second::to_mega_bytes_per_second,
                     ),
                     (
-                        "terabits-per-second",
+                        TERABITS_PER_SECOND,
                         kilo_bits_per_second::to_tera_bits_per_second,
                     ),
                     (
-                        "terabytes-per-second",
+                        TERABYTES_PER_SECOND,
                         kilo_bits_per_second::to_tera_bytes_per_second,
                     ),
                 ]),
             ),
             (
-                "kilobytes-per-second",
+                KILOBYTES_PER_SECOND,
                 HashMap::from_iter([
                     (
-                        "bits-per-second",
+                        BITS_PER_SECOND,
                         kilo_bytes_per_second::to_bits_per_second as ConversionFunction,
                     ),
                     (
-                        "gigabits-per-second",
+                        GIGABITS_PER_SECOND,
                         kilo_bytes_per_second::to_giga_bits_per_second,
                     ),
                     (
-                        "gigabytes-per-second",
+                        GIGABYTES_PER_SECOND,
                         kilo_bytes_per_second::to_giga_bytes_per_second,
                     ),
                     (
-                        "kibibits-per-second",
+                        KIBIBITS_PER_SECOND,
                         kilo_bytes_per_second::to_kibibits_per_second,
                     ),
                     (
-                        "kilobits-per-second",
+                        KILOBITS_PER_SECOND,
                         kilo_bytes_per_second::to_kilo_bits_per_second,
                     ),
-                    ("kilobytes-per-second", identity),
+                    (KILOBYTES_PER_SECOND, identity),
                     (
-                        "mebibits-per-second",
+                        MEBIBITS_PER_SECOND,
                         kilo_bytes_per_second::to_mebibits_per_second,
                     ),
                     (
-                        "megabits-per-second",
+                        MEGABITS_PER_SECOND,
                         kilo_bytes_per_second::to_mega_bits_per_second,
                     ),
                     (
-                        "megabytes-per-second",
+                        MEGABYTES_PER_SECOND,
                         kilo_bytes_per_second::to_mega_bytes_per_second,
                     ),
                     (
-                        "terabits-per-second",
+                        TERABITS_PER_SECOND,
                         kilo_bytes_per_second::to_tera_bits_per_second,
                     ),
                     (
-                        "terabytes-per-second",
+                        TERABYTES_PER_SECOND,
                         kilo_bytes_per_second::to_tera_bytes_per_second,
                     ),
                 ]),
             ),
             (
-                "mebibits-per-second",
+                MEBIBITS_PER_SECOND,
                 HashMap::from_iter([
                     (
-                        "bits-per-second",
+                        BITS_PER_SECOND,
                         mebibits_per_second::to_bits_per_second as ConversionFunction,
                     ),
                     (
-                        "gigabits-per-second",
+                        GIGABITS_PER_SECOND,
                         mebibits_per_second::to_giga_bits_per_second,
                     ),
                     (
-                        "gigabytes-per-second",
+                        GIGABYTES_PER_SECOND,
                         mebibits_per_second::to_giga_bytes_per_second,
                     ),
                     (
-                        "kibibits-per-second",
+                        KIBIBITS_PER_SECOND,
                         mebibits_per_second::to_kibibits_per_second,
                     ),
                     (
-                        "kilobits-per-second",
+                        KILOBITS_PER_SECOND,
                         mebibits_per_second::to_kilo_bits_per_second,
                     ),
                     (
-                        "kilobytes-per-second",
+                        KILOBYTES_PER_SECOND,
                         mebibits_per_second::to_kilo_bytes_per_second,
                     ),
-                    ("mebibits-per-second", identity),
+                    (MEBIBITS_PER_SECOND, identity),
                     (
-                        "megabits-per-second",
+                        MEGABITS_PER_SECOND,
                         mebibits_per_second::to_mega_bits_per_second,
                     ),
                     (
-                        "megabytes-per-second",
+                        MEGABYTES_PER_SECOND,
                         mebibits_per_second::to_mega_bytes_per_second,
                     ),
                     (
-                        "terabits-per-second",
+                        TERABITS_PER_SECOND,
                         mebibits_per_second::to_tera_bits_per_second,
                     ),
                     (
-                        "terabytes-per-second",
+                        TERABYTES_PER_SECOND,
                         mebibits_per_second::to_tera_bytes_per_second,
                     ),
                 ]),
             ),
             (
-                "megabits-per-second",
+                MEGABITS_PER_SECOND,
                 HashMap::from_iter([
                     (
-                        "bits-per-second",
+                        BITS_PER_SECOND,
                         mega_bits_per_second::to_bits_per_second as ConversionFunction,
                     ),
                     (
-                        "gigabits-per-second",
+                        GIGABITS_PER_SECOND,
                         mega_bits_per_second::to_giga_bits_per_second,
                     ),
                     (
-                        "gigabytes-per-second",
+                        GIGABYTES_PER_SECOND,
                         mega_bits_per_second::to_giga_bytes_per_second,
                     ),
                     (
-                        "kibibits-per-second",
+                        KIBIBITS_PER_SECOND,
                         mega_bits_per_second::to_kibibits_per_second,
                     ),
                     (
-                        "kilobits-per-second",
+                        KILOBITS_PER_SECOND,
                         mega_bits_per_second::to_kilo_bits_per_second,
                     ),
                     (
-                        "kilobytes-per-second",
+                        KILOBYTES_PER_SECOND,
                         mega_bits_per_second::to_kilo_bytes_per_second,
                     ),
                     (
-                        "mebibits-per-second",
+                        MEBIBITS_PER_SECOND,
                         mega_bits_per_second::to_mebibits_per_second,
                     ),
-                    ("megabits-per-second", identity),
+                    (MEGABITS_PER_SECOND, identity),
                     (
-                        "megabytes-per-second",
+                        MEGABYTES_PER_SECOND,
                         mega_bits_per_second::to_mega_bytes_per_second,
                     ),
                     (
-                        "terabits-per-second",
+                        TERABITS_PER_SECOND,
                         mega_bits_per_second::to_tera_bits_per_second,
                     ),
                     (
-                        "terabytes-per-second",
+                        TERABYTES_PER_SECOND,
                         mega_bits_per_second::to_tera_bytes_per_second,
                     ),
                 ]),
             ),
             (
-                "megabytes-per-second",
+                MEGABYTES_PER_SECOND,
                 HashMap::from_iter([
                     (
-                        "bits-per-second",
+                        BITS_PER_SECOND,
                         mega_bytes_per_second::to_bits_per_second as ConversionFunction,
                     ),
                     (
-                        "gigabits-per-second",
+                        GIGABITS_PER_SECOND,
                         mega_bytes_per_second::to_giga_bits_per_second,
                     ),
-                    ("gigabytes-per-second", identity),
+                    (GIGABYTES_PER_SECOND, identity),
                     (
-                        "kibibits-per-second",
+                        KIBIBITS_PER_SECOND,
                         mega_bytes_per_second::to_kibibits_per_second,
                     ),
                     (
-                        "kilobits-per-second",
+                        KILOBITS_PER_SECOND,
                         mega_bytes_per_second::to_kilo_bits_per_second,
                     ),
                     (
-                        "kilobytes-per-second",
+                        KILOBYTES_PER_SECOND,
                         mega_bytes_per_second::to_kilo_bytes_per_second,
                     ),
                     (
-                        "mebibits-per-second",
+                        MEBIBITS_PER_SECOND,
                         mega_bytes_per_second::to_mebibits_per_second,
                     ),
                     (
-                        "megabits-per-second",
+                        MEGABITS_PER_SECOND,
                         mega_bytes_per_second::to_mega_bits_per_second,
                     ),
-                    ("megabytes-per-second", identity),
+                    (MEGABYTES_PER_SECOND, identity),
                     (
-                        "terabits-per-second",
+                        TERABITS_PER_SECOND,
                         mega_bytes_per_second::to_tera_bits_per_second,
                     ),
                     (
-                        "terabytes-per-second",
+                        TERABYTES_PER_SECOND,
                         mega_bytes_per_second::to_tera_bytes_per_second,
                     ),
                 ]),
             ),
             (
-                "terabits-per-second",
+                TERABITS_PER_SECOND,
                 HashMap::from_iter([
                     (
-                        "bits-per-second",
+                        BITS_PER_SECOND,
                         tera_bits_per_second::to_bits_per_second as ConversionFunction,
                     ),
                     (
-                        "gigabits-per-second",
+                        GIGABITS_PER_SECOND,
                         tera_bits_per_second::to_giga_bits_per_second,
                     ),
                     (
-                        "gigabytes-per-second",
+                        GIGABYTES_PER_SECOND,
                         tera_bits_per_second::to_giga_bytes_per_second,
                     ),
                     (
-                        "kibibits-per-second",
+                        KIBIBITS_PER_SECOND,
                         tera_bits_per_second::to_kibibits_per_second,
                     ),
                     (
-                        "kilobits-per-second",
+                        KILOBITS_PER_SECOND,
                         tera_bits_per_second::to_kilo_bits_per_second,
                     ),
                     (
-                        "kilobytes-per-second",
+                        KILOBYTES_PER_SECOND,
                         tera_bits_per_second::to_kilo_bytes_per_second,
                     ),
                     (
-                        "mebibits-per-second",
+                        MEBIBITS_PER_SECOND,
                         tera_bits_per_second::to_mebibits_per_second,
                     ),
                     (
-                        "megabits-per-second",
+                        MEGABITS_PER_SECOND,
                         tera_bits_per_second::to_mega_bits_per_second,
                     ),
                     (
-                        "megabytes-per-second",
+                        MEGABYTES_PER_SECOND,
                         tera_bits_per_second::to_mega_bytes_per_second,
                     ),
-                    ("terabits-per-second", identity),
+                    (TERABITS_PER_SECOND, identity),
                     (
-                        "terabytes-per-second",
+                        TERABYTES_PER_SECOND,
                         tera_bits_per_second::to_tera_bytes_per_second,
                     ),
                 ]),
             ),
             (
-                "terabytes-per-second",
+                TERABYTES_PER_SECOND,
                 HashMap::from_iter([
                     (
-                        "bits-per-second",
+                        BITS_PER_SECOND,
                         tera_bytes_per_second::to_bits_per_second as ConversionFunction,
                     ),
                     (
-                        "gigabits-per-second",
+                        GIGABITS_PER_SECOND,
                         tera_bytes_per_second::to_giga_bits_per_second,
                     ),
                     (
-                        "gigabytes-per-second",
+                        GIGABYTES_PER_SECOND,
                         tera_bytes_per_second::to_giga_bytes_per_second,
                     ),
                     (
-                        "kibibits-per-second",
+                        KIBIBITS_PER_SECOND,
                         tera_bytes_per_second::to_kibibits_per_second,
                     ),
                     (
-                        "kilobits-per-second",
+                        KILOBITS_PER_SECOND,
                         tera_bytes_per_second::to_kilo_bits_per_second,
                     ),
                     (
-                        "kilobytes-per-second",
+                        KILOBYTES_PER_SECOND,
                         tera_bytes_per_second::to_kilo_bytes_per_second,
                     ),
                     (
-                        "mebibits-per-second",
+                        MEBIBITS_PER_SECOND,
                         tera_bytes_per_second::to_mebibits_per_second,
                     ),
                     (
-                        "megabits-per-second",
+                        MEGABITS_PER_SECOND,
                         tera_bytes_per_second::to_mega_bits_per_second,
                     ),
                     (
-                        "megabytes-per-second",
+                        MEGABYTES_PER_SECOND,
                         tera_bytes_per_second::to_mega_bytes_per_second,
                     ),
                     (
-                        "terabits-per-second",
+                        TERABITS_PER_SECOND,
                         tera_bytes_per_second::to_tera_bits_per_second,
                     ),
-                    ("terabytes-per-second", identity),
+                    (TERABYTES_PER_SECOND, identity),
                 ]),
             ),
         ])

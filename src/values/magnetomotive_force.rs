@@ -2,6 +2,9 @@ use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::magnetomotive_force::*;
 
+const AMPERETURNS: &str = "ampereturns";
+const GILBERTS: &str = "gilberts";
+
 pub struct MagnetomotiveForce;
 
 impl Values for MagnetomotiveForce {
@@ -11,20 +14,17 @@ impl Values for MagnetomotiveForce {
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
-                "ampereturns",
+                AMPERETURNS,
                 HashMap::from_iter([
-                    ("ampereturns", identity as ConversionFunction),
-                    ("gilberts", ampereturns::to_gilberts),
+                    (AMPERETURNS, identity as ConversionFunction),
+                    (GILBERTS, ampereturns::to_gilberts),
                 ]),
             ),
             (
-                "gilberts",
+                GILBERTS,
                 HashMap::from_iter([
-                    (
-                        "ampereturns",
-                        gilberts::to_ampereturns as ConversionFunction,
-                    ),
-                    ("gilberts", identity),
+                    (AMPERETURNS, gilberts::to_ampereturns as ConversionFunction),
+                    (GILBERTS, identity),
                 ]),
             ),
         ])
