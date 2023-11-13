@@ -2,10 +2,10 @@ use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::luminous_energy::*;
 
-const LUMEN_HOUR: &str = "lumen-hour";
-const LUMEN_MINUTE: &str = "lumen-minute";
-const LUMEN_SECOND: &str = "lumen-second";
-const TALBOT: &str = "talbot";
+const LUMEN_HOURS: &str = "lumen-hours";
+const LUMEN_MINUTES: &str = "lumen-minutes";
+const LUMEN_SECONDS: &str = "lumen-seconds";
+const TALBOTS: &str = "talbots";
 
 pub struct LuminousEnergy;
 
@@ -16,45 +16,45 @@ impl Values for LuminousEnergy {
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
-                LUMEN_HOUR,
+                LUMEN_HOURS,
                 HashMap::from_iter([
-                    (LUMEN_HOUR, identity as ConversionFunction),
-                    (LUMEN_MINUTE, lumen_hour::to_lumen_minute),
-                    (LUMEN_SECOND, lumen_hour::to_lumen_second),
-                    (TALBOT, lumen_hour::to_talbot),
+                    (LUMEN_HOURS, identity as ConversionFunction),
+                    (LUMEN_MINUTES, lumen_hour::to_lumen_minute),
+                    (LUMEN_SECONDS, lumen_hour::to_lumen_second),
+                    (TALBOTS, lumen_hour::to_talbot),
                 ]),
             ),
             (
-                LUMEN_MINUTE,
+                LUMEN_MINUTES,
                 HashMap::from_iter([
                     (
-                        LUMEN_HOUR,
+                        LUMEN_HOURS,
                         lumen_minute::to_lumen_hour as ConversionFunction,
                     ),
-                    (LUMEN_MINUTE, identity),
-                    (LUMEN_SECOND, lumen_minute::to_lumen_second),
-                    (TALBOT, lumen_minute::to_talbot),
+                    (LUMEN_MINUTES, identity),
+                    (LUMEN_SECONDS, lumen_minute::to_lumen_second),
+                    (TALBOTS, lumen_minute::to_talbot),
                 ]),
             ),
             (
-                LUMEN_SECOND,
+                LUMEN_SECONDS,
                 HashMap::from_iter([
                     (
-                        LUMEN_HOUR,
+                        LUMEN_HOURS,
                         lumen_second::to_lumen_hour as ConversionFunction,
                     ),
-                    (LUMEN_MINUTE, lumen_second::to_lumen_minute),
-                    (LUMEN_SECOND, identity),
-                    (TALBOT, lumen_second::to_talbot),
+                    (LUMEN_MINUTES, lumen_second::to_lumen_minute),
+                    (LUMEN_SECONDS, identity),
+                    (TALBOTS, lumen_second::to_talbot),
                 ]),
             ),
             (
-                TALBOT,
+                TALBOTS,
                 HashMap::from_iter([
-                    (LUMEN_HOUR, talbot::to_lumen_hour as ConversionFunction),
-                    (LUMEN_MINUTE, talbot::to_lumen_minute),
-                    (LUMEN_SECOND, talbot::to_lumen_second),
-                    (TALBOT, identity),
+                    (LUMEN_HOURS, talbot::to_lumen_hour as ConversionFunction),
+                    (LUMEN_MINUTES, talbot::to_lumen_minute),
+                    (LUMEN_SECONDS, talbot::to_lumen_second),
+                    (TALBOTS, identity),
                 ]),
             ),
         ])

@@ -2,7 +2,7 @@ use super::{ConversionFunction, ConversionFunctionMap, Values};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::fuel_economy::*;
 
-const KILOMETRE_PER_LITRE: &str = "kilometre-per-litre";
+const KILOMETRES_PER_LITRE: &str = "kilometres-per-litre";
 const LITRES_PER_100_KILOMETRES: &str = "litres-per-100-kilometres";
 const MILES_PER_GALLON: &str = "miles-per-gallon";
 const US_MILES_PER_GALLON: &str = "us-miles-per-gallon";
@@ -16,9 +16,9 @@ impl Values for FuelEconomy {
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
-                KILOMETRE_PER_LITRE,
+                KILOMETRES_PER_LITRE,
                 HashMap::from_iter([
-                    (KILOMETRE_PER_LITRE, identity as ConversionFunction),
+                    (KILOMETRES_PER_LITRE, identity as ConversionFunction),
                     (
                         LITRES_PER_100_KILOMETRES,
                         kilometre_per_litre::to_litres_per100_kilometres,
@@ -34,7 +34,7 @@ impl Values for FuelEconomy {
                 LITRES_PER_100_KILOMETRES,
                 HashMap::from_iter([
                     (
-                        KILOMETRE_PER_LITRE,
+                        KILOMETRES_PER_LITRE,
                         litres_per100_kilometres::to_kilometre_per_litre as ConversionFunction,
                     ),
                     (LITRES_PER_100_KILOMETRES, identity),
@@ -52,7 +52,7 @@ impl Values for FuelEconomy {
                 MILES_PER_GALLON,
                 HashMap::from_iter([
                     (
-                        KILOMETRE_PER_LITRE,
+                        KILOMETRES_PER_LITRE,
                         miles_per_gallon::to_kilometre_per_litre as ConversionFunction,
                     ),
                     (
@@ -70,7 +70,7 @@ impl Values for FuelEconomy {
                 US_MILES_PER_GALLON,
                 HashMap::from_iter([
                     (
-                        KILOMETRE_PER_LITRE,
+                        KILOMETRES_PER_LITRE,
                         u_s_miles_per_gallon::to_kilometre_per_litre as ConversionFunction,
                     ),
                     (
