@@ -60,18 +60,58 @@ pub trait Values {
 
         let values: Vec<(String, f64)> = conversion_functions
             .iter()
-            .map(|(unit, conversion_function)| {
-                // Make sure data is stored in a consistent way
-                // TODO: Pull illegal_characters out into a variable
-                if unit.contains(['_', ' ']) {
-                    eprintln!("Unit \"{}\" should not contain `_` or ` `. Use `-`", unit);
-                }
-
-                (unit.to_string(), conversion_function(value))
-            })
+            .map(|(unit, conversion_function)| (unit.to_string(), conversion_function(value)))
             .collect();
 
         Ok(values)
     }
     fn conversion_function_map() -> ConversionFunctionMap;
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn ensure_data_is_in_correct_format() {
+        use super::*;
+
+        let conversion_function_maps: [HashMap<&str, HashMap<&str, fn(f64) -> f64>>; 17] = [
+            angle::Angle::conversion_function_map(),
+            area::Area::conversion_function_map(),
+            data_storage::DataStorage::conversion_function_map(),
+            data_transfer_rate::DataTransferRate::conversion_function_map(),
+            energy::Energy::conversion_function_map(),
+            force::Force::conversion_function_map(),
+            frequency::Frequency::conversion_function_map(),
+            fuel_economy::FuelEconomy::conversion_function_map(),
+            length::Length::conversion_function_map(),
+            luminous_energy::LuminousEnergy::conversion_function_map(),
+            magnetomotive_force::MagnetomotiveForce::conversion_function_map(),
+            mass::Mass::conversion_function_map(),
+            pressure::Pressure::conversion_function_map(),
+            speed::Speed::conversion_function_map(),
+            temperature::Temperature::conversion_function_map(),
+            time::Time::conversion_function_map(),
+            volume::Volume::conversion_function_map(),
+        ];
+
+        // TODO: Rename these to make sense
+        for conversion_function_map in conversion_function_maps {
+            for (from_unit, conversion_functions) in conversion_function_map {
+                // TODO: Pull illegal_characters out into a variable
+                assert!(
+                    !from_unit.contains(['_', ' ']),
+                    "Unit \"{}\" should not contain `_` or ` `. Use `-`",
+                    from_unit
+                );
+
+                for (to_unit, _) in conversion_functions {
+                    assert!(
+                        !to_unit.contains(['_', ' ']),
+                        "Unit \"{}\" should not contain `_` or ` `. Use `-`",
+                        to_unit
+                    );
+                }
+            }
+        }
+    }
 }
