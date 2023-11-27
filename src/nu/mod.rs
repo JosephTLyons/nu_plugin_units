@@ -79,8 +79,6 @@ impl Plugin for Units {
             let label = format!("not a valid dimension.");
             let msg = format!("{} Options: {}", label, valid_dimensions);
 
-            // TODO: Convert all of these errors to errors that have "help" messages
-            // TODO: Use nushell error structure as a guide to rework these errors
             return Err(LabeledError {
                 label,
                 msg,
@@ -106,7 +104,6 @@ impl Plugin for Units {
             });
         };
 
-        // TODO: Avoid clone?
         values.sort_by_key(|value| value.0.clone());
 
         let values: Vec<_> = values
@@ -124,8 +121,6 @@ impl Plugin for Units {
         Ok(Value::list(values, tag))
     }
 }
-
-// TODO: Reasses which units to use as base units - rounding issues currently
 
 // TODO: Extract tuple into type?
 fn hash_map_tuple<D: Values>(_: D) -> (&'static str, (ValuesFunction, Vec<&'static str>)) {
