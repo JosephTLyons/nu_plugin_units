@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::volume::*;
 
@@ -25,7 +25,7 @@ const US_TEASPOONS: &str = "us-teaspoons";
 
 pub struct Volume;
 
-impl Values for Volume {
+impl Category for Volume {
     fn name() -> &'static str {
         "volume"
     }

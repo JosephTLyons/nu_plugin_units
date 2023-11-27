@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::area::*;
 
@@ -12,7 +12,7 @@ const SQUARE_MILES: &str = "square-miles";
 
 pub struct Area;
 
-impl Values for Area {
+impl Category for Area {
     fn name() -> &'static str {
         "area"
     }

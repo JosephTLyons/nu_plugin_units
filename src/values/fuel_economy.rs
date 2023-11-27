@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::fuel_economy::*;
 
@@ -9,7 +9,7 @@ const US_MILES_PER_GALLON: &str = "us-miles-per-gallon";
 
 pub struct FuelEconomy;
 
-impl Values for FuelEconomy {
+impl Category for FuelEconomy {
     fn name() -> &'static str {
         "fuel-economy"
     }

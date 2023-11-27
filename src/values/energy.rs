@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::energy::*;
 
@@ -15,7 +15,7 @@ const WATT_HOURS: &str = "watt-hours";
 
 pub struct Energy;
 
-impl Values for Energy {
+impl Category for Energy {
     fn name() -> &'static str {
         "energy"
     }

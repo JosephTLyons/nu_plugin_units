@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::data_storage::*;
 
@@ -15,7 +15,7 @@ const TERABYTES: &str = "terabytes";
 
 pub struct DataStorage;
 
-impl Values for DataStorage {
+impl Category for DataStorage {
     fn name() -> &'static str {
         "data-storage"
     }

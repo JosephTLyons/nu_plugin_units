@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::length::*;
 
@@ -14,7 +14,7 @@ const YARDS: &str = "yards";
 
 pub struct Length;
 
-impl Values for Length {
+impl Category for Length {
     fn name() -> &'static str {
         "length"
     }

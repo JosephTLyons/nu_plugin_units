@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::magnetomotive_force::*;
 
@@ -7,7 +7,7 @@ const GILBERTS: &str = "gilberts";
 
 pub struct MagnetomotiveForce;
 
-impl Values for MagnetomotiveForce {
+impl Category for MagnetomotiveForce {
     fn name() -> &'static str {
         "magnetomotive-force"
     }

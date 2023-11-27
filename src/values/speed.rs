@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::speed::*;
 
@@ -10,7 +10,7 @@ const MILES_PER_HOUR: &str = "miles-per-hour";
 
 pub struct Speed;
 
-impl Values for Speed {
+impl Category for Speed {
     fn name() -> &'static str {
         "speed"
     }

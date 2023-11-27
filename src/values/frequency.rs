@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::frequency::*;
 
@@ -9,7 +9,7 @@ const MEGAHERTZ: &str = "megahertz";
 
 pub struct Frequency;
 
-impl Values for Frequency {
+impl Category for Frequency {
     fn name() -> &'static str {
         "frequency"
     }

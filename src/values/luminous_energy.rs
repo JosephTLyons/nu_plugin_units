@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::luminous_energy::*;
 
@@ -9,7 +9,7 @@ const TALBOTS: &str = "talbots";
 
 pub struct LuminousEnergy;
 
-impl Values for LuminousEnergy {
+impl Category for LuminousEnergy {
     fn name() -> &'static str {
         "luminous-energy"
     }

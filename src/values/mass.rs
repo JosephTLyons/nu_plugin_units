@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::mass::*;
 
@@ -13,7 +13,7 @@ const TONNES: &str = "tonnes";
 
 pub struct Mass;
 
-impl Values for Mass {
+impl Category for Mass {
     fn name() -> &'static str {
         "mass"
     }

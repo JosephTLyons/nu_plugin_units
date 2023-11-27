@@ -44,8 +44,7 @@ pub type ConversionFunctionMap = HashMap<&'static str, HashMap<&'static str, Con
 pub type ValuesFunctionReturn = anyhow::Result<Vec<(String, f64)>>;
 pub type ValuesFunction = fn(&str, f64) -> ValuesFunctionReturn;
 
-// TODO: Rename? Maybe this should be dimension?
-pub trait Values {
+pub trait Category {
     fn name() -> &'static str;
     fn units() -> Vec<&'static str> {
         let mut units: Vec<_> = Self::conversion_function_map().into_keys().collect();

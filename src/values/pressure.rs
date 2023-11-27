@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::pressure::*;
 
@@ -10,7 +10,7 @@ const TORRS: &str = "torrs";
 
 pub struct Pressure;
 
-impl Values for Pressure {
+impl Category for Pressure {
     fn name() -> &'static str {
         "pressure"
     }

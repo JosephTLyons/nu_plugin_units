@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::angle::*;
 
@@ -11,7 +11,7 @@ const SECONDS_OF_ARC: &str = "seconds-of-arc";
 
 pub struct Angle;
 
-impl Values for Angle {
+impl Category for Angle {
     fn name() -> &'static str {
         "angle"
     }

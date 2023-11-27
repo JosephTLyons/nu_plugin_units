@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::temperature::*;
 
@@ -9,7 +9,7 @@ const RANKINE: &str = "rankine";
 
 pub struct Temperature;
 
-impl Values for Temperature {
+impl Category for Temperature {
     fn name() -> &'static str {
         "temperature"
     }

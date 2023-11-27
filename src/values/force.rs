@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::force::*;
 
@@ -9,7 +9,7 @@ const POUNDALS: &str = "poundals";
 
 pub struct Force;
 
-impl Values for Force {
+impl Category for Force {
     fn name() -> &'static str {
         "force"
     }

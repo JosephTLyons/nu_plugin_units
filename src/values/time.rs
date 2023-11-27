@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::time::*;
 
@@ -17,7 +17,7 @@ const YEARS: &str = "years";
 
 pub struct Time;
 
-impl Values for Time {
+impl Category for Time {
     fn name() -> &'static str {
         "time"
     }

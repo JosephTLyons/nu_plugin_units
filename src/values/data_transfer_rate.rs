@@ -1,4 +1,4 @@
-use super::{ConversionFunction, ConversionFunctionMap, Values};
+use super::{Category, ConversionFunction, ConversionFunctionMap};
 use std::{collections::HashMap, convert::identity};
 use unit_conversions::data_transfer_rate::*;
 
@@ -16,7 +16,7 @@ const TERABYTES_PER_SECOND: &str = "terabytes-per-second";
 
 pub struct DataTransferRate;
 
-impl Values for DataTransferRate {
+impl Category for DataTransferRate {
     fn name() -> &'static str {
         "data-transfer-rate"
     }

@@ -2,24 +2,23 @@ use std::collections::HashMap;
 
 use crate::values::*;
 use nu_plugin::{EvaluatedCall, LabeledError, Plugin};
-use nu_protocol::{Category, PluginSignature, Record, SyntaxShape, Value};
+use nu_protocol::{Category as NU_CATEGORY, PluginSignature, Record, SyntaxShape, Value};
 
 pub struct Units;
 
-const DIMENSION_FLAG_NAME: &'static str = "dimension";
+const CATEGORY_FLAG_NAME: &'static str = "category";
 const UNIT_FLAG_NAME: &'static str = "unit";
 const VALUE_FLAG_NAME: &'static str = "value";
 
-// TODO: Is the term dimension the correct thing to use here?
 impl Plugin for Units {
     fn signature(&self) -> Vec<PluginSignature> {
         vec![PluginSignature::build("units")
             .usage("Convert between units")
             .required_named(
-                DIMENSION_FLAG_NAME,
+                CATEGORY_FLAG_NAME,
                 SyntaxShape::String,
-                "specify the dimension",
-                Some('d'),
+                "specify the category",
+                Some('c'),
             )
             .required_named(
                 UNIT_FLAG_NAME,
@@ -33,7 +32,7 @@ impl Plugin for Units {
                 "specify the value",
                 Some('v'),
             )
-            .category(Category::Generators)]
+            .category(NU_CATEGORY::Generators)]
     }
 
     fn run(&mut self, _: &str, call: &EvaluatedCall, _: &Value) -> Result<Value, LabeledError> {
@@ -41,15 +40,15 @@ impl Plugin for Units {
 
         // The `unwrap()`s are safe, since the flags, arguments, and arguments types are enforced by the signature
         // The `unwrap()`s here are to make sure the strings looked up matches the ones in the signature
-        let dimension = call.get_flag_value(DIMENSION_FLAG_NAME).unwrap();
-        let dimension_span = dimension.span();
-        let dimension = dimension.as_string().unwrap();
+        let category = call.get_flag_value(CATEGORY_FLAG_NAME).unwrap();
+        let category_span = category.span();
+        let category = category.as_string().unwrap();
 
         let unit = call.get_flag_value(UNIT_FLAG_NAME).unwrap();
         let unit_span = unit.span();
         let unit = unit.as_string().unwrap();
 
-        let dimensions: HashMap<_, _> = HashMap::from_iter([
+        let categories: HashMap<_, _> = HashMap::from_iter([
             hash_map_tuple(Angle),
             hash_map_tuple(Area),
             hash_map_tuple(DataStorage),
@@ -69,20 +68,20 @@ impl Plugin for Units {
             hash_map_tuple(Volume),
         ]);
 
-        let Some((values_function, units)) = dimensions.get(dimension.as_str()) else {
-            let mut valid_dimensions = dimensions
+        let Some((values_function, units)) = categories.get(category.as_str()) else {
+            let mut valid_categories = categories
                 .keys()
-                .map(|dimension| format!("{}", dimension))
+                .map(|category| format!("{}", category))
                 .collect::<Vec<_>>();
-            valid_dimensions.sort();
-            let valid_dimensions = valid_dimensions.join(", ");
-            let label = format!("not a valid dimension.");
-            let msg = format!("{} Options: {}", label, valid_dimensions);
+            valid_categories.sort();
+            let valid_categories = valid_categories.join(", ");
+            let label = format!("not a valid category.");
+            let msg = format!("{} Options: {}", label, valid_categories);
 
             return Err(LabeledError {
                 label,
                 msg,
-                span: Some(dimension_span),
+                span: Some(category_span),
             });
         };
 
@@ -123,6 +122,6 @@ impl Plugin for Units {
 }
 
 // TODO: Extract tuple into type?
-fn hash_map_tuple<D: Values>(_: D) -> (&'static str, (ValuesFunction, Vec<&'static str>)) {
+fn hash_map_tuple<D: Category>(_: D) -> (&'static str, (ValuesFunction, Vec<&'static str>)) {
     (D::name(), (D::values, D::units()))
 }
