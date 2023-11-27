@@ -1,6 +1,6 @@
 [package]
 authors = ["Joseph T Lyons <JosephTLyons@gmail.com>"]
-description = "A plugin to convert between units for Nushell"
+description = "A Nushell plugin for easily converting between common units"
 edition = "2021"
 license = "GPL-3.0-only"
 name = "nu_plugin_units"
