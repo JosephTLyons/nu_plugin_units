@@ -97,18 +97,26 @@ mod tests {
         // TODO: Rename these to make sense
         for conversion_function_map in conversion_function_maps {
             for (from_unit, conversion_functions) in conversion_function_map {
-                // TODO: Pull illegal_characters out into a variable
+                let illegal_characters = ['_', ' '];
+                let illegal_characters_text = illegal_characters
+                    .iter()
+                    .map(|character| format!("`{}`", character))
+                    .collect::<Vec<_>>()
+                    .join(", ");
+
                 assert!(
-                    !from_unit.contains(['_', ' ']),
-                    "Unit \"{}\" should not contain `_` or ` `. Use `-`",
-                    from_unit
+                    !from_unit.contains(illegal_characters),
+                    "Unit \"{}\" should not contain any of the following characters: {}. Use `-`",
+                    from_unit,
+                    illegal_characters_text
                 );
 
                 for (to_unit, _) in conversion_functions {
                     assert!(
-                        !to_unit.contains(['_', ' ']),
-                        "Unit \"{}\" should not contain `_` or ` `. Use `-`",
-                        to_unit
+                        !to_unit.contains(illegal_characters),
+                        "Unit \"{}\" should not contain any of the following characters: {}. Use `-`",
+                        to_unit,
+                        illegal_characters_text
                     );
                 }
             }
