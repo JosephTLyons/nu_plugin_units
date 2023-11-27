@@ -93,7 +93,7 @@ mod tests {
             volume::Volume::conversion_function_map(),
         ];
 
-        // TODO: Rename these to make sense
+        // TODO: Rename these for loop variables to be more readable and make sense
         for conversion_function_map in conversion_function_maps {
             for (from_unit, conversion_functions) in conversion_function_map {
                 let illegal_characters = ['_', ' '];
