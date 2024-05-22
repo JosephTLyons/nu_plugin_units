@@ -1,8 +1,11 @@
 use std::collections::HashMap;
 
 use crate::values::*;
-use nu_plugin::{EvaluatedCall, LabeledError, Plugin};
-use nu_protocol::{Category as NU_CATEGORY, PluginSignature, Record, SyntaxShape, Value};
+use nu_plugin::{EvaluatedCall, Plugin, PluginCommand, SimplePluginCommand};
+use nu_protocol::{
+    Category as NU_CATEGORY, ErrorLabel, Example, LabeledError, Record, Signature, SyntaxShape,
+    Value,
+};
 
 pub struct Units;
 
@@ -11,9 +14,24 @@ const UNIT_FLAG_NAME: &'static str = "unit";
 const VALUE_FLAG_NAME: &'static str = "value";
 
 impl Plugin for Units {
-    fn signature(&self) -> Vec<PluginSignature> {
-        vec![PluginSignature::build("units")
-            .usage("Convert between units")
+    fn commands(&self) -> Vec<Box<dyn PluginCommand<Plugin = Self>>> {
+        vec![Box::new(Units)]
+    }
+}
+
+impl SimplePluginCommand for Units {
+    type Plugin = Units;
+
+    fn name(&self) -> &str {
+        "units"
+    }
+
+    fn usage(&self) -> &str {
+        "Convert between units"
+    }
+
+    fn signature(&self) -> Signature {
+        Signature::build(PluginCommand::name(self))
             .required_named(
                 CATEGORY_FLAG_NAME,
                 SyntaxShape::String,
@@ -32,21 +50,35 @@ impl Plugin for Units {
                 "specify the value",
                 Some('v'),
             )
-            .category(NU_CATEGORY::Generators)]
+            .category(NU_CATEGORY::Generators)
     }
 
-    fn run(&mut self, _: &str, call: &EvaluatedCall, _: &Value) -> Result<Value, LabeledError> {
+    fn examples(&self) -> Vec<Example> {
+        vec![Example {
+            description: "units -c time -u years -v 1".into(),
+            example: "Display various units of time equivalent to 1 year".into(),
+            result: None,
+        }]
+    }
+
+    fn run(
+        &self,
+        _: &Self::Plugin,
+        _: &nu_plugin::EngineInterface,
+        call: &EvaluatedCall,
+        _: &Value,
+    ) -> Result<Value, LabeledError> {
         let tag = call.head;
 
         // The `unwrap()`s are safe, since the flags, arguments, and arguments types are enforced by the signature
         // The `unwrap()`s here are to make sure the strings looked up matches the ones in the signature
         let category = call.get_flag_value(CATEGORY_FLAG_NAME).unwrap();
         let category_span = category.span();
-        let category = category.as_string().unwrap();
+        let category = category.into_string().unwrap();
 
         let unit = call.get_flag_value(UNIT_FLAG_NAME).unwrap();
         let unit_span = unit.span();
-        let unit = unit.as_string().unwrap();
+        let unit = unit.into_string().unwrap();
 
         let categories: HashMap<_, _> = HashMap::from_iter([
             hash_map_tuple(Angle),
@@ -75,13 +107,19 @@ impl Plugin for Units {
                 .collect::<Vec<_>>();
             valid_categories.sort();
             let valid_categories = valid_categories.join(", ");
-            let label = format!("not a valid category.");
-            let msg = format!("{} Options: {}", label, valid_categories);
+            let text = format!("not a valid category.");
+            let msg = format!("{} Options: {}", text, valid_categories);
 
             return Err(LabeledError {
-                label,
                 msg,
-                span: Some(category_span),
+                labels: vec![ErrorLabel {
+                    text,
+                    span: category_span,
+                }],
+                code: None,
+                url: None,
+                help: None,
+                inner: vec![],
             });
         };
 
@@ -93,13 +131,19 @@ impl Plugin for Units {
 
         let Ok(mut values) = values_function(&unit, value) else {
             let valid_units = units.join(", ");
-            let label = format!("not a valid unit.");
-            let msg = format!("{} Options: {}", label, valid_units);
+            let text = format!("not a valid unit.");
+            let msg = format!("{} Options: {}", text, valid_units);
 
             return Err(LabeledError {
-                label,
                 msg,
-                span: Some(unit_span),
+                labels: vec![ErrorLabel {
+                    text,
+                    span: unit_span,
+                }],
+                code: None,
+                url: None,
+                help: None,
+                inner: vec![],
             });
         };
 
