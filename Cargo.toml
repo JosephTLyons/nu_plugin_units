@@ -10,6 +10,6 @@ version = "0.1.1"
 [dependencies]
 anyhow = "1.0.75"
 nu-ansi-term = "0.50.0"
-nu-plugin = { path = "../nushell/crates/nu-plugin", version = "0.93.1" }
-nu-protocol = { path = "../nushell/crates/nu-protocol", version = "0.93.1" }
+nu-plugin = "0.94.0"
+nu-protocol = "0.94.0"
 unit-conversions = "0.1.13"

@@ -699,6 +699,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7655c9839580ee829dfacba1d1278c2b7883e50a277ff7541299489d6bdfdc45"
 
 [[package]]
+name = "itertools"
+version = "0.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ba291022dbbd398a455acf126c1e341954079855bc60dfdda641363bd6922569"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -913,7 +922,9 @@ dependencies = [
 
 [[package]]
 name = "nu-engine"
-version = "0.93.1"
+version = "0.94.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e5b3d8c4512713c7c9c06fb6e9c6a9ac6c8fd07429eeb548cb7d629f7b076097"
 dependencies = [
  "nu-glob",
  "nu-path",
@@ -923,11 +934,15 @@ dependencies = [
 
 [[package]]
 name = "nu-glob"
-version = "0.93.1"
+version = "0.94.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "45d9f1484c4ed9cb9a3a1d559a05682f3f288fdc3b37bf29ddd0c6786f26ac81"
 
 [[package]]
 name = "nu-path"
-version = "0.93.1"
+version = "0.94.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1f8d434c820497d76e05ef77364500f3731f149fa949675f9996c3999d9caef3"
 dependencies = [
  "dirs-next",
  "omnipath",
@@ -936,7 +951,9 @@ dependencies = [
 
 [[package]]
 name = "nu-plugin"
-version = "0.93.1"
+version = "0.94.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "19bd4b586e753914e80cc2d3c8c6a23891d6c12e059d1a3ba92f2c7b558972d5"
 dependencies = [
  "log",
  "nix",
@@ -949,7 +966,9 @@ dependencies = [
 
 [[package]]
 name = "nu-plugin-core"
-version = "0.93.1"
+version = "0.94.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b9618962fb5ed3841b15c3f74f3c7d096cc78de493c060881639ae2fb58154fd"
 dependencies = [
  "interprocess",
  "log",
@@ -963,7 +982,9 @@ dependencies = [
 
 [[package]]
 name = "nu-plugin-protocol"
-version = "0.93.1"
+version = "0.94.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "82ea366c4d0631e1b589adacf1789f7ad52f22fda8a3f40a49ab2b6609f68f9a"
 dependencies = [
  "bincode",
  "nu-protocol",
@@ -975,7 +996,9 @@ dependencies = [
 
 [[package]]
 name = "nu-protocol"
-version = "0.93.1"
+version = "0.94.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e1f4a5e498c3c2c3951d9040a6d7aa01bb9bb10684193553cf7d88d4db38f52c"
 dependencies = [
  "brotli",
  "byte-unit",
@@ -999,9 +1022,12 @@ dependencies = [
 
 [[package]]
 name = "nu-system"
-version = "0.93.1"
+version = "0.94.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "009a076c44b3be5e1051ce955a3668b824271cfcc37bd73953c318c944379f15"
 dependencies = [
  "chrono",
+ "itertools",
  "libc",
  "libproc",
  "log",
@@ -1016,7 +1042,9 @@ dependencies = [
 
 [[package]]
 name = "nu-utils"
-version = "0.93.1"
+version = "0.94.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b90971ae69653e91666e37b81c30d42daa8cfbd3cdacfd71a66f84d13dcea98d"
 dependencies = [
  "crossterm_winapi",
  "log",
