@@ -6,7 +6,7 @@ A [Nushell](https://www.nushell.sh) plugin for easily converting between common 
 
 1. Clone this repository
 2. Build the target via `cargo build --release`
-3. Add the plugin to nushell using the following nushell command `plugin add /target/release/nu_plugin_units`
+3. Add the plugin to nushell using the following nushell command `plugin add ./target/release/nu_plugin_units`
 4. Reload the plugin using `plugin use units`
 
 ## Usage
