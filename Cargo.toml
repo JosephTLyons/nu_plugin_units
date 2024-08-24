@@ -8,8 +8,8 @@ repository = "https://github.com/JosephTLyons/nu_plugin_units"
 version = "0.1.1"
 
 [dependencies]
-anyhow = "1.0.75"
-nu-ansi-term = "0.50.0"
-nu-plugin = "0.94.0"
-nu-protocol = "0.94.0"
-unit-conversions = "0.1.13"
+anyhow = "1.0.86"
+nu-ansi-term = "0.50.1"
+nu-plugin = "0.97.1"
+nu-protocol = "0.97.1"
+unit-conversions = "0.1.16"
