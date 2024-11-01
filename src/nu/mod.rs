@@ -30,7 +30,7 @@ impl SimplePluginCommand for Units {
         "units"
     }
 
-    fn usage(&self) -> &str {
+    fn description(&self) -> &str {
         "Convert between units"
     }
 
