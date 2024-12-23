@@ -130,7 +130,7 @@ impl SimplePluginCommand for Units {
         let value = call
             .get_flag_value(VALUE_FLAG_NAME)
             .unwrap()
-            .as_f64()
+            .as_float()
             .unwrap();
 
         let Ok(mut values) = values_function(&unit, value) else {
