@@ -116,14 +116,14 @@ impl SimplePluginCommand for Units {
 
             return Err(LabeledError {
                 msg,
-                labels: vec![ErrorLabel {
+                labels: Box::new(vec![ErrorLabel {
                     text,
                     span: category_span,
-                }],
+                }]),
                 code: None,
                 url: None,
                 help: None,
-                inner: vec![],
+                inner: Box::new(vec![]),
             });
         };
 
@@ -140,14 +140,14 @@ impl SimplePluginCommand for Units {
 
             return Err(LabeledError {
                 msg,
-                labels: vec![ErrorLabel {
+                labels: Box::new(vec![ErrorLabel {
                     text,
                     span: unit_span,
-                }],
+                }]),
                 code: None,
                 url: None,
                 help: None,
-                inner: vec![],
+                inner: Box::new(vec![]),
             });
         };
 
