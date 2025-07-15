@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## June 28, 2025 - v0.1.7
+## July 15, 2025 - v0.1.7
 
 - Updated Nushell crates to fix broken state of plugin.
 
