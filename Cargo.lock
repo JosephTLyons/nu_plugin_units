@@ -854,7 +854,7 @@ dependencies = [
 
 [[package]]
 name = "nu_plugin_units"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "anyhow",
  "nu-ansi-term",

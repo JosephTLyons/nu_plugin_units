@@ -5,7 +5,7 @@ edition = "2021"
 license = "GPL-3.0-only"
 name = "nu_plugin_units"
 repository = "https://github.com/JosephTLyons/nu_plugin_units"
-version = "0.1.6"
+version = "0.1.7"
 
 [dependencies]
 anyhow = "1.0.98"
