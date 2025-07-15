@@ -4,11 +4,11 @@
 
 - Updated Nushell crates to fix broken state of plugin.
 
-## April 30, 2024 - v0.1.6
+## April 30, 2025 - v0.1.6
 
 - Updated Nushell crates to fix broken state of plugin.
 
-## April 5, 2024 - v0.1.5
+## April 5, 2025 - v0.1.5
 
 - Updated Nushell crates to fix broken state of plugin.
 
