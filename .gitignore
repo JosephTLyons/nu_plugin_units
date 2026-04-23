@@ -1,2 +1,8 @@
 /target
 .DS_Store
+
+# nix-related
+/.direnv
+/.envrc
+/result*
+/repl-result*
