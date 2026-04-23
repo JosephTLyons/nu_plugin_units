@@ -57,7 +57,7 @@ impl SimplePluginCommand for Units {
             .category(NU_CATEGORY::Generators)
     }
 
-    fn examples(&self) -> Vec<Example> {
+    fn examples(&self) -> Vec<Example<'_>> {
         vec![Example {
             description: "units -c time -u years -v 1".into(),
             example: "Display various units of time equivalent to 1 year".into(),
