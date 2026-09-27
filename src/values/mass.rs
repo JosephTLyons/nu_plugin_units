@@ -14,9 +14,8 @@ const TONNES: &str = "tonnes";
 pub struct Mass;
 
 impl Category for Mass {
-    fn name() -> &'static str {
-        "mass"
-    }
+    const NAME: &'static str = "mass";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

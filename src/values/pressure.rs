@@ -11,9 +11,8 @@ const TORRS: &str = "torrs";
 pub struct Pressure;
 
 impl Category for Pressure {
-    fn name() -> &'static str {
-        "pressure"
-    }
+    const NAME: &'static str = "pressure";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

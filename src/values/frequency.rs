@@ -10,9 +10,8 @@ const MEGAHERTZ: &str = "megahertz";
 pub struct Frequency;
 
 impl Category for Frequency {
-    fn name() -> &'static str {
-        "frequency"
-    }
+    const NAME: &'static str = "frequency";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

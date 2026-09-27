@@ -26,9 +26,8 @@ const US_TEASPOONS: &str = "us-teaspoons";
 pub struct Volume;
 
 impl Category for Volume {
-    fn name() -> &'static str {
-        "volume"
-    }
+    const NAME: &'static str = "volume";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

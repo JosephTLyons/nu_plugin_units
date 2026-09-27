@@ -41,7 +41,7 @@ pub type ConversionFunction = fn(f64) -> f64;
 pub type ConversionFunctionMap = HashMap<&'static str, HashMap<&'static str, ConversionFunction>>;
 
 pub trait Category {
-    fn name() -> &'static str;
+    const NAME: &'static str;
     fn conversion_function_map() -> ConversionFunctionMap;
 }
 

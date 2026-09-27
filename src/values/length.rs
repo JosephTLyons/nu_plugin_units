@@ -15,9 +15,8 @@ const YARDS: &str = "yards";
 pub struct Length;
 
 impl Category for Length {
-    fn name() -> &'static str {
-        "length"
-    }
+    const NAME: &'static str = "length";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

@@ -16,9 +16,8 @@ const WATT_HOURS: &str = "watt-hours";
 pub struct Energy;
 
 impl Category for Energy {
-    fn name() -> &'static str {
-        "energy"
-    }
+    const NAME: &'static str = "energy";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

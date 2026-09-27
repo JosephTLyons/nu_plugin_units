@@ -12,9 +12,8 @@ const SECONDS_OF_ARC: &str = "seconds-of-arc";
 pub struct Angle;
 
 impl Category for Angle {
-    fn name() -> &'static str {
-        "angle"
-    }
+    const NAME: &'static str = "angle";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

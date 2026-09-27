@@ -16,9 +16,8 @@ const TERABYTES: &str = "terabytes";
 pub struct DataStorage;
 
 impl Category for DataStorage {
-    fn name() -> &'static str {
-        "data-storage"
-    }
+    const NAME: &'static str = "data-storage";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

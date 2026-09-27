@@ -10,9 +10,8 @@ const US_MILES_PER_GALLON: &str = "us-miles-per-gallon";
 pub struct FuelEconomy;
 
 impl Category for FuelEconomy {
-    fn name() -> &'static str {
-        "fuel-economy"
-    }
+    const NAME: &'static str = "fuel-economy";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

@@ -10,9 +10,8 @@ const POUNDALS: &str = "poundals";
 pub struct Force;
 
 impl Category for Force {
-    fn name() -> &'static str {
-        "force"
-    }
+    const NAME: &'static str = "force";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

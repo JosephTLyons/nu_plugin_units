@@ -10,9 +10,8 @@ const TALBOTS: &str = "talbots";
 pub struct LuminousEnergy;
 
 impl Category for LuminousEnergy {
-    fn name() -> &'static str {
-        "luminous-energy"
-    }
+    const NAME: &'static str = "luminous-energy";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

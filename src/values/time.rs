@@ -18,9 +18,8 @@ const YEARS: &str = "years";
 pub struct Time;
 
 impl Category for Time {
-    fn name() -> &'static str {
-        "time"
-    }
+    const NAME: &'static str = "time";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

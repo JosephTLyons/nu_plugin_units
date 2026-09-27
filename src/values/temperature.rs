@@ -10,9 +10,8 @@ const RANKINE: &str = "rankine";
 pub struct Temperature;
 
 impl Category for Temperature {
-    fn name() -> &'static str {
-        "temperature"
-    }
+    const NAME: &'static str = "temperature";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

@@ -17,9 +17,8 @@ const TERABYTES_PER_SECOND: &str = "terabytes-per-second";
 pub struct DataTransferRate;
 
 impl Category for DataTransferRate {
-    fn name() -> &'static str {
-        "data-transfer-rate"
-    }
+    const NAME: &'static str = "data-transfer-rate";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

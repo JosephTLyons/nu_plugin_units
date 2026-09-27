@@ -178,5 +178,5 @@ impl SimplePluginCommand for Units {
 }
 
 fn category_entry<C: Category>() -> (&'static str, fn() -> ConversionFunctionMap) {
-    (C::name(), C::conversion_function_map)
+    (C::NAME, C::conversion_function_map)
 }

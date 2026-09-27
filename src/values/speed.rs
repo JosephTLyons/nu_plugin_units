@@ -11,9 +11,8 @@ const MILES_PER_HOUR: &str = "miles-per-hour";
 pub struct Speed;
 
 impl Category for Speed {
-    fn name() -> &'static str {
-        "speed"
-    }
+    const NAME: &'static str = "speed";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

@@ -13,9 +13,8 @@ const SQUARE_MILES: &str = "square-miles";
 pub struct Area;
 
 impl Category for Area {
-    fn name() -> &'static str {
-        "area"
-    }
+    const NAME: &'static str = "area";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (

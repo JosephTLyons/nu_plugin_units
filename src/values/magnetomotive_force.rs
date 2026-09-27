@@ -8,9 +8,8 @@ const GILBERTS: &str = "gilberts";
 pub struct MagnetomotiveForce;
 
 impl Category for MagnetomotiveForce {
-    fn name() -> &'static str {
-        "magnetomotive-force"
-    }
+    const NAME: &'static str = "magnetomotive-force";
+
     fn conversion_function_map() -> ConversionFunctionMap {
         HashMap::from_iter([
             (
