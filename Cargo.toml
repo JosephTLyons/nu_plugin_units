@@ -9,7 +9,6 @@ version = "0.1.9"
 
 [dependencies]
 anyhow = "1.0.99"
-nu-ansi-term = "0.50.1"
 nu-plugin = "0.116.0"
 nu-protocol = "0.116.0"
 unit-conversions = "0.1.16"

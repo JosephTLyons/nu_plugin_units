@@ -1226,7 +1226,6 @@ name = "nu_plugin_units"
 version = "0.1.9"
 dependencies = [
  "anyhow",
- "nu-ansi-term",
  "nu-plugin",
  "nu-protocol",
  "unit-conversions",
