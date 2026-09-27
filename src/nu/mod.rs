@@ -9,9 +9,9 @@ use nu_protocol::{
 
 pub struct Units;
 
-const CATEGORY_FLAG_NAME: &'static str = "category";
-const UNIT_FLAG_NAME: &'static str = "unit";
-const VALUE_FLAG_NAME: &'static str = "value";
+const CATEGORY_FLAG_NAME: &str = "category";
+const UNIT_FLAG_NAME: &str = "unit";
+const VALUE_FLAG_NAME: &str = "value";
 
 impl Plugin for Units {
     fn commands(&self) -> Vec<Box<dyn PluginCommand<Plugin = Self>>> {
@@ -57,10 +57,10 @@ impl SimplePluginCommand for Units {
             .category(NU_CATEGORY::Generators)
     }
 
-    fn examples(&self) -> Vec<Example> {
+    fn examples(&self) -> Vec<Example<'_>> {
         vec![Example {
-            description: "units -c time -u years -v 1".into(),
-            example: "Display various units of time equivalent to 1 year".into(),
+            description: "units -c time -u years -v 1",
+            example: "Display various units of time equivalent to 1 year",
             result: None,
         }]
     }
@@ -107,11 +107,11 @@ impl SimplePluginCommand for Units {
         let Some((values_function, units)) = categories.get(category.as_str()) else {
             let mut valid_categories = categories
                 .keys()
-                .map(|category| format!("{}", category))
+                .map(|category| category.to_string())
                 .collect::<Vec<_>>();
             valid_categories.sort();
             let valid_categories = valid_categories.join(", ");
-            let text = format!("not a valid category.");
+            let text = "not a valid category.".to_string();
             let msg = format!("{} Options: {}", text, valid_categories);
 
             return Err(LabeledError {
@@ -135,7 +135,7 @@ impl SimplePluginCommand for Units {
 
         let Ok(mut values) = values_function(&unit, value) else {
             let valid_units = units.join(", ");
-            let text = format!("not a valid unit.");
+            let text = "not a valid unit.".to_string();
             let msg = format!("{} Options: {}", text, valid_units);
 
             return Err(LabeledError {

@@ -73,7 +73,7 @@ mod tests {
     fn ensure_data_is_in_correct_format() {
         use super::*;
 
-        let conversion_function_maps: [HashMap<&str, HashMap<&str, fn(f64) -> f64>>; 17] = [
+        let conversion_function_maps: [ConversionFunctionMap; 17] = [
             angle::Angle::conversion_function_map(),
             area::Area::conversion_function_map(),
             data_storage::DataStorage::conversion_function_map(),
