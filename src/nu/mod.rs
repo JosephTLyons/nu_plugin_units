@@ -59,8 +59,8 @@ impl SimplePluginCommand for Units {
 
     fn examples(&self) -> Vec<Example<'_>> {
         vec![Example {
-            description: "units -c time -u years -v 1",
-            example: "Display various units of time equivalent to 1 year",
+            description: "Display various units of time equivalent to 1 year",
+            example: "units -c time -u years -v 1",
             result: None,
         }]
     }
