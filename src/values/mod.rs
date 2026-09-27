@@ -76,6 +76,41 @@ pub const CATEGORIES: &[(&str, ConversionFunctionMapBuilder)] = &[
     (Volume::NAME, Volume::conversion_function_map),
 ];
 
+pub enum ConversionError {
+    UnknownCategory { valid_categories: Vec<&'static str> },
+    UnknownUnit { valid_units: Vec<&'static str> },
+}
+
+/// Converts `value` from `unit` into every unit of `category`, sorted by unit name.
+pub fn convert(
+    category: &str,
+    unit: &str,
+    value: f64,
+) -> Result<Vec<(&'static str, f64)>, ConversionError> {
+    let Some((_, conversion_function_map)) = CATEGORIES.iter().find(|(name, _)| *name == category)
+    else {
+        let mut valid_categories: Vec<_> = CATEGORIES.iter().map(|(name, _)| *name).collect();
+        valid_categories.sort();
+        return Err(ConversionError::UnknownCategory { valid_categories });
+    };
+
+    let conversion_function_map = conversion_function_map();
+
+    let Some(conversion_functions) = conversion_function_map.get(unit) else {
+        let mut valid_units: Vec<_> = conversion_function_map.keys().copied().collect();
+        valid_units.sort();
+        return Err(ConversionError::UnknownUnit { valid_units });
+    };
+
+    let mut values: Vec<_> = conversion_functions
+        .iter()
+        .map(|(unit, conversion_function)| (*unit, conversion_function(value)))
+        .collect();
+    values.sort_by_key(|(unit, _)| *unit);
+
+    Ok(values)
+}
+
 #[cfg(test)]
 mod tests {
     #[test]

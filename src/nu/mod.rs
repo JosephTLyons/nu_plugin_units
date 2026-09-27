@@ -1,4 +1,4 @@
-use crate::values::CATEGORIES;
+use crate::values::{convert, ConversionError};
 use nu_plugin::{EvaluatedCall, Plugin, PluginCommand, SimplePluginCommand};
 use nu_protocol::{
     Category as NU_CATEGORY, Example, LabeledError, Record, Signature, SyntaxShape, Value,
@@ -81,41 +81,24 @@ impl SimplePluginCommand for Units {
         let unit_span = unit.span();
         let unit = unit.into_string().unwrap();
 
-        let Some((_, conversion_function_map)) =
-            CATEGORIES.iter().find(|(name, _)| *name == category)
-        else {
-            let mut valid_categories: Vec<_> = CATEGORIES.iter().map(|(name, _)| *name).collect();
-            valid_categories.sort();
-            let valid_categories = valid_categories.join(", ");
-            let text = "not a valid category.";
-            return Err(
-                LabeledError::new(format!("{text} Options: {valid_categories}"))
-                    .with_label(text, category_span),
-            );
-        };
-
         let value = call
             .get_flag_value(VALUE_FLAG_NAME)
             .unwrap()
             .as_float()
             .unwrap();
 
-        let conversion_function_map = conversion_function_map();
-
-        let Some(conversion_functions) = conversion_function_map.get(unit.as_str()) else {
-            let mut valid_units: Vec<_> = conversion_function_map.keys().copied().collect();
-            valid_units.sort();
-            let valid_units = valid_units.join(", ");
-            let text = "not a valid unit.";
-            return Err(LabeledError::new(format!("{text} Options: {valid_units}"))
-                .with_label(text, unit_span));
-        };
-
-        let mut values: Vec<_> = conversion_functions
-            .iter()
-            .map(|(unit, conversion_function)| (*unit, conversion_function(value)))
-            .collect();
-        values.sort_by_key(|(unit, _)| *unit);
+        let values = convert(&category, &unit, value).map_err(|error| {
+            let (text, options, span) = match error {
+                ConversionError::UnknownCategory { valid_categories } => {
+                    ("not a valid category.", valid_categories, category_span)
+                }
+                ConversionError::UnknownUnit { valid_units } => {
+                    ("not a valid unit.", valid_units, unit_span)
+                }
+            };
+            let options = options.join(", ");
+            LabeledError::new(format!("{text} Options: {options}")).with_label(text, span)
+        })?;
 
         let values: Vec<_> = values
             .into_iter()
