@@ -1,8 +1,7 @@
 use crate::values::CATEGORIES;
 use nu_plugin::{EvaluatedCall, Plugin, PluginCommand, SimplePluginCommand};
 use nu_protocol::{
-    Category as NU_CATEGORY, ErrorLabel, Example, LabeledError, Record, Signature, SyntaxShape,
-    Value,
+    Category as NU_CATEGORY, Example, LabeledError, Record, Signature, SyntaxShape, Value,
 };
 
 pub struct Units;
@@ -88,20 +87,11 @@ impl SimplePluginCommand for Units {
             let mut valid_categories: Vec<_> = CATEGORIES.iter().map(|(name, _)| *name).collect();
             valid_categories.sort();
             let valid_categories = valid_categories.join(", ");
-            let text = "not a valid category.".to_string();
-            let msg = format!("{} Options: {}", text, valid_categories);
-
-            return Err(LabeledError {
-                msg,
-                labels: Box::new(vec![ErrorLabel {
-                    text,
-                    span: category_span,
-                }]),
-                code: None,
-                url: None,
-                help: None,
-                inner: Box::new(vec![]),
-            });
+            let text = "not a valid category.";
+            return Err(
+                LabeledError::new(format!("{text} Options: {valid_categories}"))
+                    .with_label(text, category_span),
+            );
         };
 
         let value = call
@@ -116,20 +106,9 @@ impl SimplePluginCommand for Units {
             let mut valid_units: Vec<_> = conversion_function_map.keys().copied().collect();
             valid_units.sort();
             let valid_units = valid_units.join(", ");
-            let text = "not a valid unit.".to_string();
-            let msg = format!("{} Options: {}", text, valid_units);
-
-            return Err(LabeledError {
-                msg,
-                labels: Box::new(vec![ErrorLabel {
-                    text,
-                    span: unit_span,
-                }]),
-                code: None,
-                url: None,
-                help: None,
-                inner: Box::new(vec![]),
-            });
+            let text = "not a valid unit.";
+            return Err(LabeledError::new(format!("{text} Options: {valid_units}"))
+                .with_label(text, unit_span));
         };
 
         let mut values: Vec<_> = conversion_functions
