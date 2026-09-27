@@ -85,26 +85,26 @@ impl SimplePluginCommand for Units {
         let unit = unit.into_string().unwrap();
 
         let categories: HashMap<_, _> = HashMap::from_iter([
-            hash_map_tuple(Angle),
-            hash_map_tuple(Area),
-            hash_map_tuple(DataStorage),
-            hash_map_tuple(DataTransferRate),
-            hash_map_tuple(Energy),
-            hash_map_tuple(Force),
-            hash_map_tuple(Frequency),
-            hash_map_tuple(FuelEconomy),
-            hash_map_tuple(Length),
-            hash_map_tuple(LuminousEnergy),
-            hash_map_tuple(MagnetomotiveForce),
-            hash_map_tuple(Mass),
-            hash_map_tuple(Pressure),
-            hash_map_tuple(Speed),
-            hash_map_tuple(Temperature),
-            hash_map_tuple(Time),
-            hash_map_tuple(Volume),
+            category_entry::<Angle>(),
+            category_entry::<Area>(),
+            category_entry::<DataStorage>(),
+            category_entry::<DataTransferRate>(),
+            category_entry::<Energy>(),
+            category_entry::<Force>(),
+            category_entry::<Frequency>(),
+            category_entry::<FuelEconomy>(),
+            category_entry::<Length>(),
+            category_entry::<LuminousEnergy>(),
+            category_entry::<MagnetomotiveForce>(),
+            category_entry::<Mass>(),
+            category_entry::<Pressure>(),
+            category_entry::<Speed>(),
+            category_entry::<Temperature>(),
+            category_entry::<Time>(),
+            category_entry::<Volume>(),
         ]);
 
-        let Some((values_function, units)) = categories.get(category.as_str()) else {
+        let Some(conversion_function_map) = categories.get(category.as_str()) else {
             let mut valid_categories = categories
                 .keys()
                 .map(|category| category.to_string())
@@ -133,8 +133,12 @@ impl SimplePluginCommand for Units {
             .as_float()
             .unwrap();
 
-        let Ok(mut values) = values_function(&unit, value) else {
-            let valid_units = units.join(", ");
+        let conversion_function_map = conversion_function_map();
+
+        let Some(conversion_functions) = conversion_function_map.get(unit.as_str()) else {
+            let mut valid_units: Vec<_> = conversion_function_map.keys().copied().collect();
+            valid_units.sort();
+            let valid_units = valid_units.join(", ");
             let text = "not a valid unit.".to_string();
             let msg = format!("{} Options: {}", text, valid_units);
 
@@ -151,15 +155,19 @@ impl SimplePluginCommand for Units {
             });
         };
 
-        values.sort_by_key(|value| value.0.clone());
+        let mut values: Vec<_> = conversion_functions
+            .iter()
+            .map(|(unit, conversion_function)| (*unit, conversion_function(value)))
+            .collect();
+        values.sort_by_key(|(unit, _)| *unit);
 
         let values: Vec<_> = values
-            .iter()
+            .into_iter()
             .map(|(unit, value)| {
                 let unit = unit.replace('-', " ");
                 let record = Record::from_iter([
                     (UNIT_FLAG_NAME.into(), Value::string(unit, tag)),
-                    (VALUE_FLAG_NAME.into(), Value::float(*value, tag)),
+                    (VALUE_FLAG_NAME.into(), Value::float(value, tag)),
                 ]);
                 Value::record(record, tag)
             })
@@ -169,7 +177,6 @@ impl SimplePluginCommand for Units {
     }
 }
 
-// TODO: Extract tuple into type?
-fn hash_map_tuple<D: Category>(_: D) -> (&'static str, (ValuesFunction, Vec<&'static str>)) {
-    (D::name(), (D::values, D::units()))
+fn category_entry<C: Category>() -> (&'static str, fn() -> ConversionFunctionMap) {
+    (C::name(), C::conversion_function_map)
 }

@@ -36,34 +36,12 @@ pub use temperature::Temperature;
 pub use time::Time;
 pub use volume::Volume;
 
-use anyhow::bail;
-
-// Rename or get rid of these all together - they might only be making things more confusing
 pub type ConversionFunction = fn(f64) -> f64;
+/// Maps each unit to the functions that convert it into every unit of the same category.
 pub type ConversionFunctionMap = HashMap<&'static str, HashMap<&'static str, ConversionFunction>>;
-pub type ValuesFunctionReturn = anyhow::Result<Vec<(String, f64)>>;
-pub type ValuesFunction = fn(&str, f64) -> ValuesFunctionReturn;
 
 pub trait Category {
     fn name() -> &'static str;
-    fn units() -> Vec<&'static str> {
-        let mut units: Vec<_> = Self::conversion_function_map().into_keys().collect();
-        units.sort();
-        units
-    }
-    fn values(unit: &str, value: f64) -> ValuesFunctionReturn {
-        let conversion_function_map = Self::conversion_function_map();
-        let Some(conversion_functions) = conversion_function_map.get(unit) else {
-            bail!("{} is not a valid unit", unit)
-        };
-
-        let values: Vec<(String, f64)> = conversion_functions
-            .iter()
-            .map(|(unit, conversion_function)| (unit.to_string(), conversion_function(value)))
-            .collect();
-
-        Ok(values)
-    }
     fn conversion_function_map() -> ConversionFunctionMap;
 }
 

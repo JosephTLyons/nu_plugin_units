@@ -1225,7 +1225,6 @@ dependencies = [
 name = "nu_plugin_units"
 version = "0.1.9"
 dependencies = [
- "anyhow",
  "nu-plugin",
  "nu-protocol",
  "unit-conversions",
