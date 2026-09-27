@@ -1,6 +1,4 @@
-use std::collections::HashMap;
-
-use crate::values::*;
+use crate::values::CATEGORIES;
 use nu_plugin::{EvaluatedCall, Plugin, PluginCommand, SimplePluginCommand};
 use nu_protocol::{
     Category as NU_CATEGORY, ErrorLabel, Example, LabeledError, Record, Signature, SyntaxShape,
@@ -84,31 +82,10 @@ impl SimplePluginCommand for Units {
         let unit_span = unit.span();
         let unit = unit.into_string().unwrap();
 
-        let categories: HashMap<_, _> = HashMap::from_iter([
-            category_entry::<Angle>(),
-            category_entry::<Area>(),
-            category_entry::<DataStorage>(),
-            category_entry::<DataTransferRate>(),
-            category_entry::<Energy>(),
-            category_entry::<Force>(),
-            category_entry::<Frequency>(),
-            category_entry::<FuelEconomy>(),
-            category_entry::<Length>(),
-            category_entry::<LuminousEnergy>(),
-            category_entry::<MagnetomotiveForce>(),
-            category_entry::<Mass>(),
-            category_entry::<Pressure>(),
-            category_entry::<Speed>(),
-            category_entry::<Temperature>(),
-            category_entry::<Time>(),
-            category_entry::<Volume>(),
-        ]);
-
-        let Some(conversion_function_map) = categories.get(category.as_str()) else {
-            let mut valid_categories = categories
-                .keys()
-                .map(|category| category.to_string())
-                .collect::<Vec<_>>();
+        let Some((_, conversion_function_map)) =
+            CATEGORIES.iter().find(|(name, _)| *name == category)
+        else {
+            let mut valid_categories: Vec<_> = CATEGORIES.iter().map(|(name, _)| *name).collect();
             valid_categories.sort();
             let valid_categories = valid_categories.join(", ");
             let text = "not a valid category.".to_string();
@@ -175,8 +152,4 @@ impl SimplePluginCommand for Units {
 
         Ok(Value::list(values, tag))
     }
-}
-
-fn category_entry<C: Category>() -> (&'static str, fn() -> ConversionFunctionMap) {
-    (C::NAME, C::conversion_function_map)
 }

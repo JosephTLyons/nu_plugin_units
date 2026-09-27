@@ -39,11 +39,42 @@ pub use volume::Volume;
 pub type ConversionFunction = fn(f64) -> f64;
 /// Maps each unit to the functions that convert it into every unit of the same category.
 pub type ConversionFunctionMap = HashMap<&'static str, HashMap<&'static str, ConversionFunction>>;
+pub type ConversionFunctionMapBuilder = fn() -> ConversionFunctionMap;
 
 pub trait Category {
     const NAME: &'static str;
     fn conversion_function_map() -> ConversionFunctionMap;
 }
+
+/// Every category the plugin supports, as (name, conversion table builder) pairs.
+pub const CATEGORIES: &[(&str, ConversionFunctionMapBuilder)] = &[
+    (Angle::NAME, Angle::conversion_function_map),
+    (Area::NAME, Area::conversion_function_map),
+    (DataStorage::NAME, DataStorage::conversion_function_map),
+    (
+        DataTransferRate::NAME,
+        DataTransferRate::conversion_function_map,
+    ),
+    (Energy::NAME, Energy::conversion_function_map),
+    (Force::NAME, Force::conversion_function_map),
+    (Frequency::NAME, Frequency::conversion_function_map),
+    (FuelEconomy::NAME, FuelEconomy::conversion_function_map),
+    (Length::NAME, Length::conversion_function_map),
+    (
+        LuminousEnergy::NAME,
+        LuminousEnergy::conversion_function_map,
+    ),
+    (
+        MagnetomotiveForce::NAME,
+        MagnetomotiveForce::conversion_function_map,
+    ),
+    (Mass::NAME, Mass::conversion_function_map),
+    (Pressure::NAME, Pressure::conversion_function_map),
+    (Speed::NAME, Speed::conversion_function_map),
+    (Temperature::NAME, Temperature::conversion_function_map),
+    (Time::NAME, Time::conversion_function_map),
+    (Volume::NAME, Volume::conversion_function_map),
+];
 
 #[cfg(test)]
 mod tests {
@@ -51,29 +82,9 @@ mod tests {
     fn ensure_data_is_in_correct_format() {
         use super::*;
 
-        let conversion_function_maps: [ConversionFunctionMap; 17] = [
-            angle::Angle::conversion_function_map(),
-            area::Area::conversion_function_map(),
-            data_storage::DataStorage::conversion_function_map(),
-            data_transfer_rate::DataTransferRate::conversion_function_map(),
-            energy::Energy::conversion_function_map(),
-            force::Force::conversion_function_map(),
-            frequency::Frequency::conversion_function_map(),
-            fuel_economy::FuelEconomy::conversion_function_map(),
-            length::Length::conversion_function_map(),
-            luminous_energy::LuminousEnergy::conversion_function_map(),
-            magnetomotive_force::MagnetomotiveForce::conversion_function_map(),
-            mass::Mass::conversion_function_map(),
-            pressure::Pressure::conversion_function_map(),
-            speed::Speed::conversion_function_map(),
-            temperature::Temperature::conversion_function_map(),
-            time::Time::conversion_function_map(),
-            volume::Volume::conversion_function_map(),
-        ];
-
         // TODO: Rename these for loop variables to be more readable and make sense
-        for conversion_function_map in conversion_function_maps {
-            for (from_unit, conversion_functions) in conversion_function_map {
+        for (_, conversion_function_map) in CATEGORIES {
+            for (from_unit, conversion_functions) in conversion_function_map() {
                 let illegal_characters = ['_', ' '];
                 let illegal_characters_text = illegal_characters
                     .iter()
