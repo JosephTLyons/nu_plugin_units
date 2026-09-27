@@ -98,7 +98,7 @@ impl Category for Mass {
                 ]),
             ),
             (
-                "stones",
+                STONES,
                 HashMap::from_iter([
                     (CARATS, stones::to_carats as ConversionFunction),
                     (GRAMS, stones::to_grams),

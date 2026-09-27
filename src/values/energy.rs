@@ -112,7 +112,7 @@ impl Category for Energy {
                 ]),
             ),
             (
-                "kilojoules",
+                KILOJOULES,
                 HashMap::from_iter([
                     (BTU, kilojoules::to_btu as ConversionFunction),
                     (CALORIES, kilojoules::to_calories),
