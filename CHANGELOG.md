@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## September 26, 2026 - v0.1.9
+
+- Updated Nushell crates to fix broken state of plugin.
+- Fixed swapped description and example in `help units`.
+
 ## August 25, 2025 - v0.1.8
 
 - Updated Nushell crates to fix broken state of plugin.
